@@ -1,6 +1,7 @@
 #pragma once
 
 #include "All.hpp"
+class AEntity;
 
 class Character : public AEntity {
     protected:

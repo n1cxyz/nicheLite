@@ -1,6 +1,7 @@
 #pragma once
 
 #include "All.hpp"
+class Character;
 
 class Player : public Character {
     private:

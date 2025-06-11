@@ -1,4 +1,5 @@
 #include "All.hpp"
+
 //The window we'll be rendering to
 SDL_Window* gWindow = nullptr;
     
