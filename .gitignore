@@ -1,0 +1,8 @@
+# Ignore build output
+bin/
+
+# Ignore VSCode settings
+.vscode/
+
+# Ignore assets
+assets/
