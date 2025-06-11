@@ -1,16 +1,4 @@
-#include "game.hpp"
-
-//The window we'll be rendering to
-SDL_Window* gWindow = nullptr;
-    
-//The surface contained by the window
-SDL_Surface* gScreenSurface = nullptr;
-
-//The surface contained by the window
-SDL_Texture* gTexture = nullptr;
-
-//The image we will load and show on the screen
-SDL_Renderer* gRenderer = nullptr;
+#include "All.hpp"
 
 // Starts up SDL and creates window + renderer
 bool init() {
@@ -52,7 +40,7 @@ bool init() {
     return success;
 }
 
-bool loadMedia() {
+bool loadTexture() {
     bool success = true;
 
     SDL_Surface* loadedSurface = IMG_Load("assets/trans_char.png");
