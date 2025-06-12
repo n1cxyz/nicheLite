@@ -9,7 +9,7 @@ class AEntity {
         float posX_;
         float posY_;
 
-        // Maximum dimensions
+        // dimensions
         const int width_;
         const int height_;
 
