@@ -16,9 +16,11 @@
 #include "Character.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
+#include "Timer.hpp"
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
+#define SCREEN_FPS 60;
 
 extern SDL_Window* gWindow;
 extern SDL_Renderer* gRenderer;

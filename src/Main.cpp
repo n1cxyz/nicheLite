@@ -12,6 +12,8 @@ SDL_Texture* gTexture = nullptr;
 //The image we will load and show on the screen
 SDL_Renderer* gRenderer = nullptr;
 
+const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS
+
 int main(int argc, char* args[]) {
     (void)argc;
     (void)args;
@@ -38,8 +40,15 @@ int main(int argc, char* args[]) {
             bool quit = false;
             // Event handler
             SDL_Event e;{}
-            // While application is running
+            
+            Timer fpsTimer;
+            Timer capTimer;
+            int countedFrames = 0;
+            fpsTimer.start();
+
             while (!quit) {
+                capTimer.start();
+
                 // Handle events on queue
                 while (SDL_PollEvent(&e) != 0) {
                     // User requests quit
@@ -49,6 +58,12 @@ int main(int argc, char* args[]) {
 
                     man->handleEvent(e);
                 }
+                float avgFps = countedFrames / (fpsTimer.getTicks() / 1000.f);
+                if (avgFps > 2000000) {
+                    avgFps = 0;
+                }
+
+
                 man->move();
                 // Clear screen
                 SDL_RenderClear(gRenderer);
@@ -57,6 +72,12 @@ int main(int argc, char* args[]) {
                 man->render();
                 // Update screen
                 SDL_RenderPresent(gRenderer);
+                ++countedFrames;
+                // if frame finished eaerly
+                int frameTicks = capTimer.getTicks();
+                if (frameTicks < SCREEN_TICKS_PER_FRAME) {
+                    SDL_Delay(SCREEN_TICKS_PER_FRAME - frameTicks);
+                }
             }
         }
     }

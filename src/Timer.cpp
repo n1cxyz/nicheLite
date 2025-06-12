@@ -1,6 +1,6 @@
 #include "Timer.hpp"
 
-Timer::Timer() : startTicks(0), pausedTicks(0), paused(false), started(false) {}
+Timer::Timer() : startTicks(0), pausedTicks(0), started(false), paused(false) {}
 
 void Timer::start() {
     started = true;
