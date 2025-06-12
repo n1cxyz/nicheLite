@@ -7,5 +7,6 @@ class Player : public Character {
     private:
     public:
         void handleEvent(SDL_Event& e);
-        void move();
+        // moves and cheks for collision
+        void move(Tile *tiles[]);
 };

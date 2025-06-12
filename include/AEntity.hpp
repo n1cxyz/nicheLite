@@ -13,6 +13,8 @@ class AEntity {
         const int width_;
         const int height_;
 
+        // collision box
+        SDL_Rect box;
     public:
         AEntity();
         virtual ~AEntity();
