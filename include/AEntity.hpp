@@ -17,6 +17,8 @@ class AEntity {
         SDL_Rect box_;
 
         Texture* texture_ = nullptr;
+        SDL_Renderer* renderer_ = nullptr;
+
     public:
         AEntity();
         //virtual void update() = 0;
@@ -24,5 +26,7 @@ class AEntity {
 
         void render();
 
+        void setTexture(Texture* txt);
         Texture* getTexture() const;
+        void setRenderer(SDL_Renderer* renderer_);
 };

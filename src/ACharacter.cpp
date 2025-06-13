@@ -4,6 +4,8 @@ ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(10) {};
 ACharacter::~ACharacter() {};
 
 void ACharacter::move(Tile *tiles[]) {
+    printf("velX : %d\n", velX_);
+    printf("velY : %d\n", velY_);
     // Move left or right
     posX_ += velX_;
 

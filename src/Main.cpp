@@ -12,7 +12,6 @@ Texture gDotTexture;
 
 int main(void) {
     Game game;
-    
     if (!game.init()) {
         printf("Failed to initialize!\n");
     } else {

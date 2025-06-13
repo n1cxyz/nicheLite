@@ -1,6 +1,6 @@
 #include "All.hpp"
 
-Texture gPlayerTexture;
+//Texture gPlayerTexture;
 
 void Player::handleEvent(SDL_Event& e) {
     // key was pressed
@@ -44,5 +44,6 @@ void Player::setCamera(SDL_Rect& camera) {
 }
 
 void Player::render(SDL_Rect& camera) {
-    gPlayerTexture.render(box_.x - camera.x, box_.y - camera.y);
+    texture_->render(box_.x - camera.x, box_.y - camera.y);
+    //gPlayerTexture.render(3, 1);
 }

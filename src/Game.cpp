@@ -58,18 +58,24 @@ void Game::run() {
 	SDL_Event e;
 
     Player player;
+    Texture playerTexture;
 
+    player.setTexture(&playerTexture);
+    //player.setRenderer(renderer_);
+    player.getTexture()->setRenderer(renderer_);
     tileTexture.setRenderer(renderer_);
 
     if (!loadMedia(tileSet, player.getTexture())) {
         printf( "Failed to load media!\n" );
         return;
+    } else {
+        printf("Successfully loaded media!\n");
     }
     
     // camera
     SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
-    while (quit) {
+    while (!quit) {
         // handle events
         while (SDL_PollEvent(&e) != 0) {
             //User requests quit
@@ -85,12 +91,12 @@ void Game::run() {
         player.setCamera(camera);
 
         // clear screen
-		SDL_SetRenderDrawColor(renderer_, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0);
 		SDL_RenderClear(renderer_);
 
         // render level
 		for (int i = 0; i < TOTAL_TILES; ++i) {
-			tileSet[ i ]->render( camera );
+			tileSet[i]->render(camera);
 		}
 
         // render player
@@ -107,19 +113,25 @@ bool Game::loadMedia(Tile* tiles[], Texture* playerTexture) {
 
 	// Load player texture
 	if (!playerTexture->loadFromFile("assets/trans_char.png"))	{
-		printf( "Failed to load dot texture!\n" );
+		printf( "Failed to load player texture!\n" );
 		success = false;
-	}
+	} else {
+        printf("successfully loaded player texture\n");
+    }
 
     // load tile texture
     if (!tileTexture.loadFromFile("assets/tiles.png")) {
         printf("Failed to load file set texture!");
         success = false;
+    } else {
+        printf("successfully loaded file set texture\n");
     }
     // load tile map
     if (!setTiles(tiles)) {
         printf("Failed to load tile set!\n");
         success = false;
+    } else {
+        printf("successfullu loaded file set\n");
     }
 
     return success;
@@ -127,18 +139,18 @@ bool Game::loadMedia(Tile* tiles[], Texture* playerTexture) {
 
 void Game::shutdown(Tile* tiles[]) {
     for (int i = 0; i < TOTAL_TILES; ++i) {
-        if (tiles[i] != NULL) {
+        if (tiles[i] != nullptr) {
             delete tiles[i];
-            tiles[i] = NULL;
+            tiles[i] = nullptr;
         }
     }
 
-    //tileTexture.free();
+    tileTexture.free();
 
     SDL_DestroyRenderer(renderer_);
     SDL_DestroyWindow(window_);
-    renderer_ = NULL;
-    window_ = NULL;
+    renderer_ = nullptr;
+    window_ = nullptr;
 
     IMG_Quit();
     SDL_Quit();
@@ -286,7 +298,7 @@ bool Game::setTiles(Tile* tiles[]) {
 		}
 
         map.close();
-
+        //printf("Success\n");
         return tilesLoaded;
     }
 }

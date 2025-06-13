@@ -14,8 +14,8 @@ class Texture {
         ~Texture();
 
         bool loadFromFile(std::string path);
-        //void free();
-        void render(int x, int y, SDL_Rect* clip = NULL);
+        void free();
+        void render(int x, int y, SDL_Rect* clip = nullptr);
     
         void setColor(Uint8 red, Uint8 green, Uint8 blue);
         void setAlpha(Uint8 alpha);

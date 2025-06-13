@@ -34,5 +34,5 @@ bool touchesWall( SDL_Rect box, Tile* tiles[] );
 bool setTiles( Tile *tiles[] ); */
 
 bool checkCollision(SDL_Rect a, SDL_Rect b);
-bool setTiles(Tile* tiles[]);
+//bool setTiles(Tile* tiles[]);
 bool touchesWall(SDL_Rect box, Tile* tiles[]);
