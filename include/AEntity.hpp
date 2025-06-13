@@ -14,12 +14,12 @@ class AEntity {
         const int height_;
 
         // collision box
-        SDL_Rect box;
+        SDL_Rect box_;
     public:
         AEntity();
         virtual ~AEntity();
 
         void render();
 
-        Texture* texture_ = nullptr;
+        Texture* texture = nullptr;
 };

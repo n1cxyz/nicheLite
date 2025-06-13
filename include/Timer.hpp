@@ -2,6 +2,12 @@
 #include "All.hpp"
 
 class Timer {
+private:
+    Uint32 startTicks_;
+    Uint32 pausedTicks_;
+
+    bool started_;
+    bool paused_;
 public:
     Timer();
 
@@ -13,11 +19,4 @@ public:
     Uint32 getTicks() const;
     bool isStarted() const;
     bool isPaused() const;
-
-private:
-    Uint32 startTicks;
-    Uint32 pausedTicks;
-
-    bool started;
-    bool paused;
 };

@@ -21,7 +21,7 @@ int main(int argc, char* args[]) {
     Texture txt;
     txt.loadFromFile("assets/trans_char.png");
     Character* man = new (Character);
-    man->texture_ = &txt;
+    man->texture = &txt;
     // Start up SDL and create window
     if (!init()) {
         printf("Failed to initialize!\n");
@@ -35,7 +35,7 @@ int main(int argc, char* args[]) {
             Texture txt;
             txt.loadFromFile("assets/trans_char.png");
             Player* man = new (Player);
-            man->texture_ = &txt;
+            man->texture = &txt;
             // Main loop flag
             bool quit = false;
             // Event handler
