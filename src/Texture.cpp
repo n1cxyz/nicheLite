@@ -7,13 +7,13 @@ Texture::Texture() {
 }
 
 Texture::~Texture() {
-	free();
+	//free();
 }
 
 bool Texture::loadFromFile(std::string path)
 {
 	//Get rid of preexisting texture
-	free();
+	//free();
 
 	//The final texture
 	SDL_Texture* newTexture = NULL;
@@ -30,7 +30,7 @@ bool Texture::loadFromFile(std::string path)
 		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF));
 
 		//Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+        newTexture = SDL_CreateTextureFromSurface(renderer_, loadedSurface);
 		if (newTexture == NULL)
 		{
 			printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
@@ -51,7 +51,7 @@ bool Texture::loadFromFile(std::string path)
 	return texture_ != NULL;
 }
 
-void Texture::free() {
+/* void Texture::free() {
 	//Free texture if it exists
 	if (texture_ != NULL)
 	{
@@ -60,7 +60,7 @@ void Texture::free() {
 		width_ = 0;
 		height_ = 0;
 	}
-}
+} */
 
 void Texture::setColor(Uint8 red, Uint8 green, Uint8 blue) {
 	//Modulate texture rgb
@@ -83,7 +83,7 @@ void Texture::render(int x, int y, SDL_Rect* clip) {
 		renderQuad.h = clip->h;
 	}
 
-	SDL_RenderCopy(gRenderer, texture_, clip, &renderQuad);
+	SDL_RenderCopy(renderer_, texture_, clip, &renderQuad);
 }
 
 int Texture::getWidth() {

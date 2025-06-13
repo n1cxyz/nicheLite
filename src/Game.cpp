@@ -1,5 +1,10 @@
 #include "All.hpp"
 
+/* Texture gTileTexture;
+SDL_Rect gTileClips[TOTAL_TILE_SPRITES]; */
+//SDL_Renderer* renderer_ = nullptr;
+
+
 Game::Game() {}
 Game::~Game() {}
 
@@ -44,7 +49,7 @@ bool Game::init() {
 
 void Game::run() {
 
-    Tile* tileset[TOTAL_TILES];
+    Tile* tileSet[TOTAL_TILES];
 
     // Main loop flag
     bool quit = false;
@@ -54,7 +59,9 @@ void Game::run() {
 
     Player player;
 
-    if (!loadMedia(tileset, player.getTexture())) {
+    tileTexture.setRenderer(renderer_);
+
+    if (!loadMedia(tileSet, player.getTexture())) {
         printf( "Failed to load media!\n" );
         return;
     }
@@ -74,7 +81,7 @@ void Game::run() {
             player.handleEvent(e);           
         }
 
-        player.move(tileset);
+        player.move(tileSet);
         player.setCamera(camera);
 
         // clear screen
@@ -105,7 +112,10 @@ bool Game::loadMedia(Tile* tiles[], Texture* playerTexture) {
 	}
 
     // load tile texture
-    
+    if (!tileTexture.loadFromFile("assets/tiles.png")) {
+        printf("Failed to load file set texture!");
+        success = false;
+    }
     // load tile map
     if (!setTiles(tiles)) {
         printf("Failed to load tile set!\n");
@@ -113,4 +123,188 @@ bool Game::loadMedia(Tile* tiles[], Texture* playerTexture) {
     }
 
     return success;
+}
+
+void Game::shutdown(Tile* tiles[]) {
+    for (int i = 0; i < TOTAL_TILES; ++i) {
+        if (tiles[i] != NULL) {
+            delete tiles[i];
+            tiles[i] = NULL;
+        }
+    }
+
+    //tileTexture.free();
+
+    SDL_DestroyRenderer(renderer_);
+    SDL_DestroyWindow(window_);
+    renderer_ = NULL;
+    window_ = NULL;
+
+    IMG_Quit();
+    SDL_Quit();
+}
+
+bool checkCollision(SDL_Rect a, SDL_Rect b) {
+    // sides of rectangles
+    int leftA, leftB;
+    int rightA, rightB;
+    int topA, topB;
+    int bottomA, bottomB;
+
+    // calculate the sides of rect A
+    leftA = a.x;
+    rightA = a.x + a.w;
+    topA = a.y;
+    bottomA = a.y + a.h;
+
+    // calculate the sides of  rect B
+    leftB = b.x;
+    rightB = b.x + b.w;
+    topB = b.y;
+    bottomB = b.y + b.h;
+
+    // if any of the sides from A are outside of B
+    if (bottomA <= topB) {
+        return false;
+    }
+    if (topA >= bottomB) {
+        return false;
+    }
+    if (rightA <= leftB) {
+        return false;
+    }
+    if (leftA >= rightB) {
+        return false;
+    }
+
+    return true;
+}
+
+bool Game::setTiles(Tile* tiles[]) {
+    bool tilesLoaded = true;
+
+    int x = 0, y = 0;
+
+    std::ifstream map("assets/lazy.map");
+    if (map.fail()) {
+        printf("Unable to load map file!\n");
+        tilesLoaded = false;
+    } else {
+        // init tiles
+        for (int i = 0; i < TOTAL_TILES; ++i) {
+            // determine what kind of tile will be made
+            int tileType = -1;
+
+            // read tile from map file
+            map >> tileType;
+            if (map.fail()) {
+                printf("Error loading map: Unexpected end of file!\n");
+                tilesLoaded = false;
+                break;
+            }
+
+            // if the number is a valid tile number
+            if ((tileType >= 0) && (tileType < TOTAL_TILE_SPRITES)) {
+                tiles[i] = new Tile(x, y, tileType, &tileTexture, gTileClips);
+            } else {
+                printf("Error loading map: Invalid tile type at %d!\n", i);
+                tilesLoaded = false;
+                break;
+            }
+
+            // move to next tile spot
+            x += TILE_WIDTH;
+
+            if (x >= LEVEL_WIDTH) {
+                x = 0;
+                y += TILE_HEIGHT;
+            }
+        }
+
+        //Clip the sprite sheet
+		if( tilesLoaded )
+		{
+			gTileClips[ TILE_RED ].x = 0;
+			gTileClips[ TILE_RED ].y = 0;
+			gTileClips[ TILE_RED ].w = TILE_WIDTH;
+			gTileClips[ TILE_RED ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_GREEN ].x = 0;
+			gTileClips[ TILE_GREEN ].y = 80;
+			gTileClips[ TILE_GREEN ].w = TILE_WIDTH;
+			gTileClips[ TILE_GREEN ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_BLUE ].x = 0;
+			gTileClips[ TILE_BLUE ].y = 160;
+			gTileClips[ TILE_BLUE ].w = TILE_WIDTH;
+			gTileClips[ TILE_BLUE ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_TOPLEFT ].x = 80;
+			gTileClips[ TILE_TOPLEFT ].y = 0;
+			gTileClips[ TILE_TOPLEFT ].w = TILE_WIDTH;
+			gTileClips[ TILE_TOPLEFT ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_LEFT ].x = 80;
+			gTileClips[ TILE_LEFT ].y = 80;
+			gTileClips[ TILE_LEFT ].w = TILE_WIDTH;
+			gTileClips[ TILE_LEFT ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_BOTTOMLEFT ].x = 80;
+			gTileClips[ TILE_BOTTOMLEFT ].y = 160;
+			gTileClips[ TILE_BOTTOMLEFT ].w = TILE_WIDTH;
+			gTileClips[ TILE_BOTTOMLEFT ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_TOP ].x = 160;
+			gTileClips[ TILE_TOP ].y = 0;
+			gTileClips[ TILE_TOP ].w = TILE_WIDTH;
+			gTileClips[ TILE_TOP ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_CENTER ].x = 160;
+			gTileClips[ TILE_CENTER ].y = 80;
+			gTileClips[ TILE_CENTER ].w = TILE_WIDTH;
+			gTileClips[ TILE_CENTER ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_BOTTOM ].x = 160;
+			gTileClips[ TILE_BOTTOM ].y = 160;
+			gTileClips[ TILE_BOTTOM ].w = TILE_WIDTH;
+			gTileClips[ TILE_BOTTOM ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_TOPRIGHT ].x = 240;
+			gTileClips[ TILE_TOPRIGHT ].y = 0;
+			gTileClips[ TILE_TOPRIGHT ].w = TILE_WIDTH;
+			gTileClips[ TILE_TOPRIGHT ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_RIGHT ].x = 240;
+			gTileClips[ TILE_RIGHT ].y = 80;
+			gTileClips[ TILE_RIGHT ].w = TILE_WIDTH;
+			gTileClips[ TILE_RIGHT ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_BOTTOMRIGHT ].x = 240;
+			gTileClips[ TILE_BOTTOMRIGHT ].y = 160;
+			gTileClips[ TILE_BOTTOMRIGHT ].w = TILE_WIDTH;
+			gTileClips[ TILE_BOTTOMRIGHT ].h = TILE_HEIGHT;
+		}
+
+        map.close();
+
+        return tilesLoaded;
+    }
+}
+
+bool touchesWall(SDL_Rect box, Tile* tiles[]) {
+    for (int i = 0; i < TOTAL_TILES; ++i) {
+        // if the tile is a wall type 
+        if ((tiles[i]->getType() >= TILE_CENTER) && (tiles[i]->getType() <= TILE_TOPLEFT)) {
+            // if the collision box touches the wall tile
+            if (checkCollision(box, tiles[i]->getBox())) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+SDL_Renderer* Game::getRenderer() const {
+    return renderer_;
 }

@@ -1,8 +1,10 @@
 #pragma once
 
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 720
 #define SCREEN_FPS 60
+
+/* extern SDL_Renderer* renderer_;
+extern Texture gTileTexture;
+extern SDL_Rect gTileClips[TOTAL_TILE_SPRITES]; */
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;

@@ -1,9 +1,19 @@
 #pragma once
 
+#include "Texture.hpp"
+#include "Constants.hpp"
+#include "All.hpp"
+
+class Tile;
+
+
 class Game {
 private:
     SDL_Window* window_ = nullptr;
     SDL_Renderer* renderer_ = nullptr;
+
+    Texture tileTexture;
+    SDL_Rect gTileClips[TOTAL_TILE_SPRITES];
 
 public:
     Game();
@@ -12,7 +22,11 @@ public:
     bool init();
     void run();
     bool loadMedia(Tile* tiles[], Texture* playerTexture);
-    void shutdown();
+    void shutdown(Tile* tiles[]);
 
-    SDL_Renderer* getRenderer() const { return renderer_; }
+    //bool checkCollision(SDL_Rect a, SDL_Rect b);
+    bool setTiles(Tile* tiles[]);
+    //bool touchesWall(SDL_Rect box, Tile* tiles[]);
+
+    SDL_Renderer* getRenderer() const;
 };

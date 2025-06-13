@@ -7,7 +7,8 @@ bool setTiles( Tile *tiles[] );
 //Scene textures
 Texture gDotTexture;
 
-const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS
+//const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS
+
 
 int main(void) {
     Game game;

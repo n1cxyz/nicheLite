@@ -43,6 +43,6 @@ void Player::setCamera(SDL_Rect& camera) {
     }
 }
 
-void render(SDL_Rect& camera) {
+void Player::render(SDL_Rect& camera) {
     gPlayerTexture.render(box_.x - camera.x, box_.y - camera.y);
 }

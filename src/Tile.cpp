@@ -1,8 +1,8 @@
 #include "All.hpp"
-Texture gTileTexture;
-SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ];
+/* Texture gTileTexture;
+SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ]; */
 
-Tile::Tile(int x, int y, int tileType) {
+Tile::Tile(int x, int y, int tileType, Texture* tileTexture, SDL_Rect* gTileClips) {
     // get offsets
     box_.x = x;
     box_.y = y;
@@ -12,12 +12,15 @@ Tile::Tile(int x, int y, int tileType) {
     box_.h = TILE_HEIGHT;
 
     type_ = tileType;
+
+    this->tileTexture = tileTexture;
+    this->gTileClips = gTileClips;
 }
 
 void Tile::render(SDL_Rect& camera) {
     // if tile is on  screen
     if (checkCollision(camera, box_)) {
-        gTileTexture.render(box_.x - camera.x, box_.y - camera.y, &gTileClips[type_]);
+        tileTexture->render(box_.x - camera.x, box_.y - camera.y, &gTileClips[type_]);
     }
 }
 

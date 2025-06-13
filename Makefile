@@ -22,7 +22,7 @@ $(TARGET): $(OBJ)
 
 # Compile source files into bin/*.o
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) -g $(CXXFLAGS) -c $< -o $@
 
 # Ensure bin directory exists
 $(BIN_DIR):

@@ -1,7 +1,7 @@
 #include "All.hpp"
 
 // Starts up SDL and creates window + renderer
-bool init() {
+/* bool init() {
     bool success = true;
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -93,4 +93,4 @@ void close(Tile* tiles[]) {
 
     // Quit SDL
     SDL_Quit();
-}
+} */
