@@ -15,11 +15,14 @@ class AEntity {
 
         // collision box
         SDL_Rect box_;
+
+        Texture* texture_ = nullptr;
     public:
         AEntity();
+        //virtual void update() = 0;
         virtual ~AEntity();
 
         void render();
 
-        Texture* texture = nullptr;
+        Texture* getTexture() const;
 };

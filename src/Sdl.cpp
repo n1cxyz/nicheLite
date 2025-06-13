@@ -40,6 +40,10 @@ bool init() {
     return success;
 }
 
+bool loadMedia(Tile* tiles[]) {
+
+}
+
 bool loadTexture() {
     bool success = true;
 
@@ -65,7 +69,7 @@ bool loadTexture() {
 }
 
 // Frees media and shuts down SDL
-void close() {
+void close(Tile* tiles[]) {
     // Free loaded texture
     if (gTexture != nullptr) {
         SDL_DestroyTexture(gTexture);

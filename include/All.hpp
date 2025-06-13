@@ -24,11 +24,15 @@
 #define SCREEN_HEIGHT 720
 #define SCREEN_FPS 60;
 
-extern SDL_Window* gWindow;
+/* extern SDL_Window* gWindow;
 extern SDL_Renderer* gRenderer;
 extern SDL_Surface* gScreenSurface;
-extern SDL_Texture* gTexture;
+extern SDL_Texture* gTexture; */
 
-bool init();
+/* bool init();
+bool loadMedia(Tile* tiles[]);
 bool loadTexture();
-void close();
+void close(Tile* tiles[]);
+bool checkCollision( SDL_Rect a, SDL_Rect b );
+bool touchesWall( SDL_Rect box, Tile* tiles[] );
+bool setTiles( Tile *tiles[] ); */

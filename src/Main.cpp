@@ -1,26 +1,25 @@
 #include "All.hpp"
 
-//The window we'll be rendering to
-SDL_Window* gWindow = nullptr;
-    
-//The surface contained by the window
-SDL_Surface* gScreenSurface = nullptr;
+bool checkCollision( SDL_Rect a, SDL_Rect b );
+bool touchesWall( SDL_Rect box, Tile* tiles[] );
+bool setTiles( Tile *tiles[] );
 
-//The surface contained by the window
-SDL_Texture* gTexture = nullptr;
-
-//The image we will load and show on the screen
-SDL_Renderer* gRenderer = nullptr;
+//Scene textures
+Texture gDotTexture;
 
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS
 
-int main(int argc, char* args[]) {
-    (void)argc;
-    (void)args;
+int main(void) {
+    Game game;
     
-    Texture txt;
+    if (!game.init()) {
+        printf("Failed to initialize!\n");
+    } else {
+        game.run();
+    }
+    /* Texture txt;
     txt.loadFromFile("assets/trans_char.png");
-    ACharacter* man = new (ACharacter);
+    Player* man = new (Player);
     man->texture = &txt;
     // Start up SDL and create window
     if (!init()) {
@@ -82,6 +81,6 @@ int main(int argc, char* args[]) {
         }
     }
     // Free resources and close SDL
-    close();
+    close(); */
     return 0;
 }
