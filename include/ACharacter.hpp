@@ -3,7 +3,7 @@
 #include "All.hpp"
 class AEntity;
 
-class Character : public AEntity {
+class ACharacter : public AEntity {
     protected:
         // velocity
         int velX_;
@@ -11,7 +11,10 @@ class Character : public AEntity {
         // Maximum axis velocity
         const int maxVel_;
     public:
-        Character();
-        ~Character();
+        ACharacter();
+        virtual ~ACharacter();
+
+        // moves and cheks for collision
+        void move(Tile *tiles[]);
 
 };

@@ -20,23 +20,3 @@ void Player::handleEvent(SDL_Event& e) {
         }
     }
 }
-
-void Player::move() {
-    // Move left or right
-    posX_ += velX_;
-
-    // If moved too far
-    if ((posX_ < 0) || (posX_ + width_ > SCREEN_WIDTH)) {
-        // move back
-        posX_ -= velX_;
-    }
-
-    // Move up or down
-    posY_ += velY_;
-
-    // If moved too far
-    if ((posY_ < 0) || (posY_ + height_ > SCREEN_HEIGHT)) {
-        // move back
-        posY_ -= velY_;
-    }
-}

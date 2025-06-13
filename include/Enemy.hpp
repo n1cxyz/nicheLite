@@ -2,7 +2,7 @@
 
 #include "All.hpp"
 
-class Enemy : public Character {
+class Enemy : public ACharacter {
     private:
     public:
 };

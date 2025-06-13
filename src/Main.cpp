@@ -20,7 +20,7 @@ int main(int argc, char* args[]) {
     
     Texture txt;
     txt.loadFromFile("assets/trans_char.png");
-    Character* man = new (Character);
+    ACharacter* man = new (ACharacter);
     man->texture = &txt;
     // Start up SDL and create window
     if (!init()) {

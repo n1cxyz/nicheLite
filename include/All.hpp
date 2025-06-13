@@ -13,10 +13,12 @@
 #include "Map.hpp"
 #include "Texture.hpp"
 #include "Tile.hpp"
-#include "Character.hpp"
+#include "ACharacter.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
+#include "Constants.hpp"
 #include "Timer.hpp"
+
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
