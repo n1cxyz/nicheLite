@@ -33,3 +33,6 @@ const int TILE_BOTTOM = 8;
 const int TILE_BOTTOMLEFT = 9;
 const int TILE_LEFT = 10;
 const int TILE_TOPLEFT = 11;
+
+// Player walking animation
+const int WALKING_ANIMATION_FRAMES = 16;

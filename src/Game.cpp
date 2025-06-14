@@ -26,7 +26,7 @@ bool Game::init() {
         }
         else {
             // Create renderer
-            renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED);
+            renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
             if (renderer_ == nullptr) {
                 printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
                 success = false;
@@ -46,6 +46,8 @@ bool Game::init() {
 
     return success;
 }
+
+const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 void Game::run() {
 
@@ -71,11 +73,33 @@ void Game::run() {
     } else {
         printf("Successfully loaded media!\n");
     }
+
+    const int start_x = 36;
+    const int start_y = 50;
+    const int horizontal_space = 64;
+
+    for (int i = 0; i < 16; ++i) {
+        player.spriteClips[i].x = start_x + i * horizontal_space;
+        player.spriteClips[i].y = start_y;
+        player.spriteClips[i].w = 32;
+        player.spriteClips[i].h = 32;
+    }
+
+    // current animation frame
+    int frame = 0;
     
     // camera
     SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
+
+    Timer fpsTimer;
+    Timer capTimer;
+    int countedFrames = 0;
+    fpsTimer.start();
+    
     while (!quit) {
+        capTimer.start();
+
         // handle events
         while (SDL_PollEvent(&e) != 0) {
             //User requests quit
@@ -83,15 +107,20 @@ void Game::run() {
                 quit = true;
             }
 
+            float avgFps = countedFrames / (fpsTimer.getTicks() / 1000.f);
+            if (avgFps > 2000000) {
+                avgFps = 0;
+            }
+
             // Handle player input
             player.handleEvent(e);           
         }
 
         player.move(tileSet);
-        player.setCamera(camera);
+        //player.setCamera(camera);
 
         // clear screen
-		SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0);
+		SDL_SetRenderDrawColor(renderer_, 0xff, 0xff, 0xff, 0xff);
 		SDL_RenderClear(renderer_);
 
         // render level
@@ -100,10 +129,28 @@ void Game::run() {
 		}
 
         // render player
-        player.render(camera);
+        // player.render(camera);
+        SDL_Rect* currentClip = &player.spriteClips[frame / 4];
+        player.getTexture()->render(
+            (SCREEN_WIDTH - currentClip->w) / 2, 
+            (SCREEN_HEIGHT - currentClip->h) / 2, 
+            currentClip);
 
+        ++frame;
+
+        // cycle animation
+        if (frame >= 16 * 4) {
+            frame = 0;
+        }
         // update screen
         SDL_RenderPresent(renderer_);
+
+        ++countedFrames;
+        // if frame finished eaerly
+        int frameTicks = capTimer.getTicks();
+        if (frameTicks < SCREEN_TICKS_PER_FRAME) {
+            SDL_Delay(SCREEN_TICKS_PER_FRAME - frameTicks);
+        }
     }
 }
 
@@ -112,10 +159,11 @@ bool Game::loadMedia(Tile* tiles[], Texture* playerTexture) {
 	bool success = true;
 
 	// Load player texture
-	if (!playerTexture->loadFromFile("assets/trans_char.png"))	{
+	if (!playerTexture->loadFromFile("assets/Samurai/RUN.png"))	{
 		printf( "Failed to load player texture!\n" );
 		success = false;
 	} else {
+        // set sprite clips
         printf("successfully loaded player texture\n");
     }
 
@@ -307,8 +355,10 @@ bool touchesWall(SDL_Rect box, Tile* tiles[]) {
     for (int i = 0; i < TOTAL_TILES; ++i) {
         // if the tile is a wall type 
         if ((tiles[i]->getType() >= TILE_CENTER) && (tiles[i]->getType() <= TILE_TOPLEFT)) {
+            //printf("AAAAAAaaaaaaaaaaa\n");
             // if the collision box touches the wall tile
             if (checkCollision(box, tiles[i]->getBox())) {
+                //printf("touches wall\n");
                 return true;
             }
         }

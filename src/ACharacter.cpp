@@ -4,20 +4,19 @@ ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(10) {};
 ACharacter::~ACharacter() {};
 
 void ACharacter::move(Tile *tiles[]) {
-    printf("velX : %d\n", velX_);
-    printf("velY : %d\n", velY_);
+
     // Move left or right
-    posX_ += velX_;
+    box_.x += velX_;
 
     // If moved too far or touched Wall
-    if ((posX_ < 0) || (posX_ + width_ > SCREEN_WIDTH) || touchesWall(box_, tiles)) {
-        posX_ -= velX_;
+    if ((box_.x < 0) || (box_.x + width_ > SCREEN_WIDTH) || touchesWall(box_, tiles)) {
+        box_.x -= velX_;
     }
-
     // Move up or down
-    posY_ += velY_;
+    box_.y += velY_;
 
-    if ((posY_ < 0) || (posY_ + height_ > SCREEN_HEIGHT) || touchesWall(box_, tiles)) {
-        posY_ -= velY_;
+    if ((box_.y < 0) || (box_.y + height_ > SCREEN_HEIGHT) || touchesWall(box_, tiles)) {
+        box_.y -= velY_;
     }
+
 }

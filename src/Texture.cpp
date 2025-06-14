@@ -79,6 +79,7 @@ void Texture::	render(int x, int y, SDL_Rect* clip) {
 	//Set clip rendering dimensions
 	if (clip != nullptr)
 	{
+		//printf("ggg\n");
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
 	}

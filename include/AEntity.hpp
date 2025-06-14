@@ -29,4 +29,6 @@ class AEntity {
         void setTexture(Texture* txt);
         Texture* getTexture() const;
         void setRenderer(SDL_Renderer* renderer_);
+
+        SDL_Rect spriteClips[16];
 };
