@@ -8,7 +8,8 @@ class TextureManager {
     private:
         TextureManager() {}
 
-        std::unordered_map<std::string, SDL_Texture*> textures;
+        std::unordered_map<std::string, SDL_Texture*> textures_;
+        SDL_Renderer* renderer_;
 /*         SDL_Texture* texture_;
         SDL_Renderer* renderer_ = nullptr;
 
@@ -20,14 +21,14 @@ class TextureManager {
             return instance;
         }
 
-        void setRenderer(SDL_Renderer* renderer);
-
-        SDL_Texture* loadTexture(const std::string& filePath);
+        bool loadTexture(const std::string& id, const std::string& filePath);
+        
         SDL_Texture* getTexture(const std::string& key);
-    
-        void free();
-        void render(int x, int y, SDL_Rect* clip = nullptr);
-    
+        void setRenderer(SDL_Renderer* renderer) { this->renderer_ = renderer; }
+        //void render(int x, int y, SDL_Rect* clip = nullptr);
+        
+        //void free(SDL_Texture* txt);
+        //void clear();
         /*
         void setColor(Uint8 red, Uint8 green, Uint8 blue);
         void setAlpha(Uint8 alpha);

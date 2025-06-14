@@ -6,7 +6,7 @@
 
 class Tile;
 
-enum class AnimationState { Idle, Run, Attack };
+enum class State { Idle, Run, Attack };
 
 struct Animation {
     std::vector<SDL_Rect> frames;
@@ -16,9 +16,9 @@ struct Animation {
 class ACharacter : public AEntity {
     protected:
         // map of animations
-        std::unordered_map<AnimationState, Animation> animations;
+        std::unordered_map<State, Animation> animations;
 
-        AnimationState currentAnimation = AnimationState::Idle;
+        State currentState = State::Run;
         int currentFrameIndex = 0;
         Uint32 lastFrameTime = 0;
     
@@ -34,9 +34,11 @@ class ACharacter : public AEntity {
         virtual ~ACharacter();
 
         // moves and cheks for collision
-        void move(Tile* tiles[]);
+        //void move(Tile* tiles[]);
 
         void update(Uint32 currentTime);
-        void render(SDL_Renderer* renderer, SDL_Rect& desRect);
-        void setAnimatino(AnimationState newState);
+        void render(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect& desRect);
+        void setState(State newState);
+
+        State getState() const { return currentState; }
 };

@@ -4,7 +4,10 @@
 ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(10) {};
 ACharacter::~ACharacter() {};
 
-void ACharacter::move(Tile *tiles[]) {
+void render(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect& desRect) {
+    SDL_RenderCopy(renderer, texture, )
+}
+/* void ACharacter::move(Tile *tiles[]) {
 
     // Move left or right
     box_.x += velX_;
@@ -20,4 +23,4 @@ void ACharacter::move(Tile *tiles[]) {
         box_.y -= velY_;
     }
 
-}
+} */

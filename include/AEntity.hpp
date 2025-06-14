@@ -15,21 +15,19 @@ class AEntity {
         const int height_;
 
         // collision box
-        SDL_Rect box_;
+        // SDL_Rect box_;
 
-        TextureManager* texture_ = nullptr;
-        SDL_Renderer* renderer_ = nullptr;
+        // TextureManager* texture_ = nullptr;
+        //SDL_Renderer* renderer_ = nullptr;
 
     public:
         AEntity();
         //virtual void update() = 0;
         virtual ~AEntity();
 
-        void render();
+        //void render();
 
-        void setTexture(TextureManager* txt);
-        TextureManager* getTexture() const;
-        void setRenderer(SDL_Renderer* renderer_);
-
-        SDL_Rect spriteClips[16];
+        // void setTexture(TextureManager* txt);
+        // TextureManager* getTexture() const;
+        // void setRenderer(SDL_Renderer* renderer_);
 };

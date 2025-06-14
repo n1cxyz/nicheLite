@@ -1,69 +1,59 @@
 #include "TextureManager.hpp"
 #include "SDL_image.h"
 
-TextureManager::TextureManager() {
-	texture_ = nullptr;
-	width_ = 0;
-	height_ = 0;
-}
 
-TextureManager::~TextureManager() {
-	free();
-}
 
-bool TextureManager::loadFromFile(std::string path)
-{
+bool TextureManager::loadTexture(const std::string& id, const std::string& filePath) {
+
 	//Get rid of preexisting texture
-	free();
+	//free();
 
-	//The final texture
 	SDL_Texture* newTexture = nullptr;
 
-	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-	if (loadedSurface == nullptr)
-	{
-		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
-	}
-	else
-	{
+	// Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load(filePath.c_str());
+	if (loadedSurface == nullptr) {
+		printf( "Unable to load image %s! SDL_image Error: %s\n", filePath.c_str(), IMG_GetError() );
+	} else {
 		//Color key image
-		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF));
+		//SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF));
 
 		//Create texture from surface pixels
         newTexture = SDL_CreateTextureFromSurface(renderer_, loadedSurface);
-		if (newTexture == nullptr)
-		{
-			printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
-		}
-		else
-		{
+		if (newTexture == nullptr) {
+			printf( "Unable to create texture from %s! SDL Error: %s\n", filePath.c_str(), SDL_GetError() );
+		} /* 		else {
 			//Get image dimensions
 			width_ = loadedSurface->w;
 			height_ = loadedSurface->h;
-		}
+		} */
 
 		//Get rid of old loaded surface
 		SDL_FreeSurface(loadedSurface);
 	}
 
-	//Return success
-	texture_ = newTexture;
-	return texture_ != nullptr;
+	// add texture to map
+	textures_[id] = newTexture;
+
+	return newTexture != nullptr;
 }
 
-void TextureManager::free() {
+SDL_Texture* TextureManager::getTexture(const std::string& key) {
+	SDL_Texture* tex = textures_.at(key);
+	return tex;
+}
+/* void TextureManager::free(SDL_Texture* txt) {
 	//Free texture if it exists
-	if (texture_ != nullptr)
+	if (txt != nullptr)
 	{
-		SDL_DestroyTexture(texture_);
-		texture_ = nullptr;
-		width_ = 0;
-		height_ = 0;
+		SDL_DestroyTexture(txt);
+		txt = nullptr;
+		//width_ = 0;
+		//height_ = 0;
 	}
-}
+} */
 
-void TextureManager::setColor(Uint8 red, Uint8 green, Uint8 blue) {
+/* void TextureManager::setColor(Uint8 red, Uint8 green, Uint8 blue) {
 	//Modulate texture rgb
 	SDL_SetTextureColorMod(texture_, red, green, blue);
 }
@@ -93,4 +83,4 @@ int TextureManager::getHeight() {
 
 SDL_Texture* TextureManager::getTexture() const {
 	return texture_;
-}
+} */

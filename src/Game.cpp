@@ -71,23 +71,22 @@ void Game::run() {
 	SDL_Event e;
 
     Player player;
+    TextureManager& tm = TextureManager::getInstance();
 
-    player.setTexture(&playerTexture);
     //player.setRenderer(renderer_);
-    player.getTexture()->setRenderer(renderer_);
-    tileTexture.setRenderer(renderer_);
+    //player.getTexture()->setRenderer(renderer_);
+    //tileTexture.setRenderer(renderer_);
 
-    if (!loadMedia(tileSet, player.getTexture())) {
+    if (!loadMedia(tm)) {
         printf( "Failed to load media!\n" );
         return;
     } else {
         printf("Successfully loaded media!\n");
     }
 
-    SDL_SetTextureBlendMode(player.getTexture()->getTexture(), SDL_BLENDMODE_BLEND);
+    // SDL_SetTextureBlendMode(player.getTexture()->getTexture(), SDL_BLENDMODE_BLEND);
 
-     
-/*     const int start_x = 36;
+    const int start_x = 36;
     const int start_y = 50;
     const int horizontal_space = 64;
 
@@ -96,14 +95,13 @@ void Game::run() {
         player.spriteClips[i].y = start_y;
         player.spriteClips[i].w = 32;
         player.spriteClips[i].h = 32;
-    } */
+    }
 
     // current animation frame
     int frame = 0;
     
     // camera
-    SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
-
+    // SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
     Timer fpsTimer;
     Timer capTimer;
@@ -129,26 +127,27 @@ void Game::run() {
             player.handleEvent(e);           
         }
 
-        player.move(tileSet);
-        player.setCamera(camera);
+        //player.move(tileSet);
+        //player.setCamera(camera);
 
         // clear screen
 		SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
 		SDL_RenderClear(renderer_);
 
         // render level
-		for (int i = 0; i < TOTAL_TILES; ++i) {
+/* 		for (int i = 0; i < TOTAL_TILES; ++i) {
 			tileSet[i]->render(camera);
-		}
+		} */
 
         // render player
         //player.render(camera);
         SDL_Rect* currentClip = &player.spriteClips[frame / 4];
         //assert(currentClip->w > 0 && currentClip->h > 0);
-        player.getTexture()->render(
+/*         player.getTexture()->render(
             (SCREEN_WIDTH - currentClip->w) / 2, 
             (SCREEN_HEIGHT - currentClip->h) / 2, 
-            currentClip);
+            currentClip); */
+
 
         ++frame;
 
@@ -168,12 +167,12 @@ void Game::run() {
     }
 }
 
-bool Game::loadMedia(Tile* tiles[], TextureManager* playerTexture) {
+bool Game::loadMedia(TextureManager& tm) {
 	// Loading success flag
 	bool success = true;
 
 	// Load player texture
-	if (!playerTexture->loadFromFile("assets/Samurai/RUN.png"))	{
+	if (tm.loadTexture("PLAYER_RUN", "assets/Samurai/RUN.png"))	{
 		printf( "Failed to load player texture!\n" );
 		success = false;
 	} else {
@@ -181,7 +180,7 @@ bool Game::loadMedia(Tile* tiles[], TextureManager* playerTexture) {
         printf("successfully loaded player texture\n");
     }
 
-    // load tile texture
+/*     // load tile texture
     if (!tileTexture.loadFromFile("assets/tiles.png")) {
         printf("Failed to load file set texture!");
         success = false;
@@ -194,7 +193,7 @@ bool Game::loadMedia(Tile* tiles[], TextureManager* playerTexture) {
         success = false;
     } else {
         printf("successfullu loaded file set\n");
-    }
+    } */
 
     return success;
 }

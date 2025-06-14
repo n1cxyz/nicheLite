@@ -12,8 +12,7 @@ private:
     SDL_Window* window_ = nullptr;
     SDL_Renderer* renderer_ = nullptr;
 
-    TextureManager tileTexture;
-    SDL_Rect gTileClips[TOTAL_TILE_SPRITES];
+    //SDL_Rect gTileClips[TOTAL_TILE_SPRITES];
 
 public:
     Game();
@@ -21,12 +20,12 @@ public:
 
     bool init();
     void run();
-    bool loadMedia(Tile* tiles[], TextureManager* playerTexture);
-    void shutdown(Tile* tiles[]);
+    bool loadMedia(TextureManager& tm);
+   // void shutdown(Tile* tiles[]);
 
     //bool checkCollision(SDL_Rect a, SDL_Rect b);
-    bool setTiles(Tile* tiles[]);
+    //bool setTiles(Tile* tiles[]);
     //bool touchesWall(SDL_Rect box, Tile* tiles[]);
 
-    SDL_Renderer* getRenderer() const;
+    //SDL_Renderer* getRenderer() const;
 };
