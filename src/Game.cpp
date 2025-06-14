@@ -1,8 +1,10 @@
 #include "Game.hpp"
-#include "SDL_image.h"
 #include "Player.hpp"
 #include "Timer.hpp"
 #include "Tile.hpp"
+//#include "TextureManager.hpp"
+
+#include "SDL_image.h"
 #include "fstream"
 
 /* TextureManager gTileTexture;
@@ -38,7 +40,11 @@ bool Game::init() {
             }
             else {
                 // Initialize renderer color
-                SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0);
+                SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+
+                // init texture manager
+                TextureManager& tm = TextureManager::getInstance();
+                tm.setRenderer(renderer_);
 
                 // Initialize PNG loading
                 if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
@@ -56,7 +62,7 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 void Game::run() {
 
-    Tile* tileSet[TOTAL_TILES];
+    //Tile* tileSet[TOTAL_TILES];
 
     // Main loop flag
     bool quit = false;
@@ -65,7 +71,6 @@ void Game::run() {
 	SDL_Event e;
 
     Player player;
-    TextureManager playerTexture;
 
     player.setTexture(&playerTexture);
     //player.setRenderer(renderer_);

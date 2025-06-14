@@ -20,12 +20,15 @@ class TextureManager {
             return instance;
         }
 
+        void setRenderer(SDL_Renderer* renderer);
+
         SDL_Texture* loadTexture(const std::string& filePath);
         SDL_Texture* getTexture(const std::string& key);
-/*         bool loadFromFile(std::string path);
+    
         void free();
         void render(int x, int y, SDL_Rect* clip = nullptr);
     
+        /*
         void setColor(Uint8 red, Uint8 green, Uint8 blue);
         void setAlpha(Uint8 alpha);
 

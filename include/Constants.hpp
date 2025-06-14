@@ -10,8 +10,8 @@ extern TextureManager gTileTexture;
 extern SDL_Rect gTileClips[TOTAL_TILE_SPRITES]; */
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 400;
+const int SCREEN_WIDTH = 1280;
+const int SCREEN_HEIGHT = 800;
 
 //The dimensions of the level
 const int LEVEL_WIDTH = 1280;
