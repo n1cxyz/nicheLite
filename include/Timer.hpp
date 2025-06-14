@@ -1,5 +1,6 @@
 #pragma once
-#include "All.hpp"
+
+#include "SDL.h"
 
 class Timer {
 private:

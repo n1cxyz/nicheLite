@@ -1,4 +1,6 @@
-#include "All.hpp"
+#include "Tile.hpp"
+#include "Constants.hpp"
+#include "Texture.hpp"
 /* Texture gTileTexture;
 SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ]; */
 

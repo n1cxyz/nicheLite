@@ -1,6 +1,6 @@
 #pragma once
 
-#include "All.hpp"
+#include "ACharacter.hpp"
 
 class Enemy : public ACharacter {
     private:

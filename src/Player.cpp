@@ -1,4 +1,6 @@
-#include "All.hpp"
+#include "Player.hpp"
+#include "Constants.hpp"
+#include "Texture.hpp"
 
 //Texture gPlayerTexture;
 

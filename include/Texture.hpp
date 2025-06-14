@@ -1,6 +1,7 @@
 #pragma once
 
-#include "All.hpp"
+#include "SDL.h"
+#include "iostream"
 
 class Texture {
     private:
@@ -20,6 +21,7 @@ class Texture {
         void setColor(Uint8 red, Uint8 green, Uint8 blue);
         void setAlpha(Uint8 alpha);
 
+        SDL_Texture* getTexture() const;
         int getWidth();
         int getHeight();
         void setRenderer(SDL_Renderer* renderer_) {this->renderer_ = renderer_;}

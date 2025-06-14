@@ -2,13 +2,16 @@
 
 #define SCREEN_FPS 60
 
+#include "Tile.hpp"
+#include "SDL.h"
+
 /* extern SDL_Renderer* renderer_;
 extern Texture gTileTexture;
 extern SDL_Rect gTileClips[TOTAL_TILE_SPRITES]; */
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 800;
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 400;
 
 //The dimensions of the level
 const int LEVEL_WIDTH = 1280;
@@ -36,3 +39,7 @@ const int TILE_TOPLEFT = 11;
 
 // Player walking animation
 const int WALKING_ANIMATION_FRAMES = 16;
+
+bool checkCollision(SDL_Rect a, SDL_Rect b);
+//bool setTiles(Tile* tiles[]);
+bool touchesWall(SDL_Rect box, Tile* tiles[]);

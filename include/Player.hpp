@@ -1,7 +1,7 @@
 #pragma once
 
-#include "All.hpp"
-class Character;
+#include "SDL.h"
+#include "ACharacter.hpp"
 
 class Player : public ACharacter {
     private:

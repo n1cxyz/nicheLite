@@ -1,4 +1,9 @@
-#include "All.hpp"
+#include "Game.hpp"
+#include "SDL_image.h"
+#include "Player.hpp"
+#include "Timer.hpp"
+#include "Tile.hpp"
+#include "fstream"
 
 /* Texture gTileTexture;
 SDL_Rect gTileClips[TOTAL_TILE_SPRITES]; */
@@ -74,7 +79,10 @@ void Game::run() {
         printf("Successfully loaded media!\n");
     }
 
-    const int start_x = 36;
+    SDL_SetTextureBlendMode(player.getTexture()->getTexture(), SDL_BLENDMODE_BLEND);
+
+     
+/*     const int start_x = 36;
     const int start_y = 50;
     const int horizontal_space = 64;
 
@@ -83,7 +91,7 @@ void Game::run() {
         player.spriteClips[i].y = start_y;
         player.spriteClips[i].w = 32;
         player.spriteClips[i].h = 32;
-    }
+    } */
 
     // current animation frame
     int frame = 0;
@@ -117,10 +125,10 @@ void Game::run() {
         }
 
         player.move(tileSet);
-        //player.setCamera(camera);
+        player.setCamera(camera);
 
         // clear screen
-		SDL_SetRenderDrawColor(renderer_, 0xff, 0xff, 0xff, 0xff);
+		SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
 		SDL_RenderClear(renderer_);
 
         // render level
@@ -129,8 +137,9 @@ void Game::run() {
 		}
 
         // render player
-        // player.render(camera);
+        //player.render(camera);
         SDL_Rect* currentClip = &player.spriteClips[frame / 4];
+        //assert(currentClip->w > 0 && currentClip->h > 0);
         player.getTexture()->render(
             (SCREEN_WIDTH - currentClip->w) / 2, 
             (SCREEN_HEIGHT - currentClip->h) / 2, 

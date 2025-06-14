@@ -1,5 +1,9 @@
 #pragma once
 
+#include "SDL.h"
+
+class Texture;
+
 class Tile {
     private:
         SDL_Rect box_;

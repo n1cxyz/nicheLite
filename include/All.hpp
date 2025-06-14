@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+/* #include <SDL.h>
 #include <SDL_image.h>
 
 #include <stdio.h>
@@ -17,7 +17,7 @@
 #include "Player.hpp"
 #include "Enemy.hpp"
 #include "Constants.hpp"
-#include "Timer.hpp"
+#include "Timer.hpp" */
 
 
 /* extern SDL_Window* gWindow;
@@ -33,6 +33,6 @@ bool checkCollision( SDL_Rect a, SDL_Rect b );
 bool touchesWall( SDL_Rect box, Tile* tiles[] );
 bool setTiles( Tile *tiles[] ); */
 
-bool checkCollision(SDL_Rect a, SDL_Rect b);
+/* bool checkCollision(SDL_Rect a, SDL_Rect b);
 //bool setTiles(Tile* tiles[]);
-bool touchesWall(SDL_Rect box, Tile* tiles[]);
+bool touchesWall(SDL_Rect box, Tile* tiles[]); */

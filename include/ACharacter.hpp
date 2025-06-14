@@ -1,7 +1,8 @@
 #pragma once
 
-#include "All.hpp"
-class AEntity;
+#include "AEntity.hpp"
+
+class Tile;
 
 class ACharacter : public AEntity {
     protected:
@@ -15,6 +16,6 @@ class ACharacter : public AEntity {
         virtual ~ACharacter();
 
         // moves and cheks for collision
-        void move(Tile *tiles[]);
+        void move(Tile* tiles[]);
 
 };

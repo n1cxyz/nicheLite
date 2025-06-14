@@ -1,4 +1,5 @@
-#include "All.hpp"
+#include "Texture.hpp"
+#include "SDL_image.h"
 
 Texture::Texture() {
 	texture_ = nullptr;
@@ -74,15 +75,8 @@ void Texture::setAlpha(Uint8 alpha) {
 
 void Texture::	render(int x, int y, SDL_Rect* clip) {
 	//Set rendering space and render to screen
-	SDL_Rect renderQuad = {x, y, width_, height_};
+	SDL_Rect renderQuad = { x, y, clip ? clip->w : width_, clip ? clip->h : height_ };
 
-	//Set clip rendering dimensions
-	if (clip != nullptr)
-	{
-		//printf("ggg\n");
-		renderQuad.w = clip->w;
-		renderQuad.h = clip->h;
-	}
 	if (renderer_ == nullptr) {
 		printf("Warning Texture::render\n");
 	}
@@ -95,4 +89,8 @@ int Texture::getWidth() {
 
 int Texture::getHeight() {
 	return height_;
+}
+
+SDL_Texture* Texture::getTexture() const {
+	return texture_;
 }

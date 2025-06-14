@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Texture.hpp"
+#include "SDL.h"
 #include "Constants.hpp"
-#include "All.hpp"
+#include "Texture.hpp"
 
 class Tile;
 

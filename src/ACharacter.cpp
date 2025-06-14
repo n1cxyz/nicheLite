@@ -1,4 +1,5 @@
-#include "All.hpp"
+#include "ACharacter.hpp"
+#include "Constants.hpp"
 
 ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(10) {};
 ACharacter::~ACharacter() {};
