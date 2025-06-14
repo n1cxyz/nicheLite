@@ -2,7 +2,7 @@
 
 #include "SDL.h"
 
-class Texture;
+class TextureManager;
 
 class AEntity {
     protected:
@@ -17,7 +17,7 @@ class AEntity {
         // collision box
         SDL_Rect box_;
 
-        Texture* texture_ = nullptr;
+        TextureManager* texture_ = nullptr;
         SDL_Renderer* renderer_ = nullptr;
 
     public:
@@ -27,8 +27,8 @@ class AEntity {
 
         void render();
 
-        void setTexture(Texture* txt);
-        Texture* getTexture() const;
+        void setTexture(TextureManager* txt);
+        TextureManager* getTexture() const;
         void setRenderer(SDL_Renderer* renderer_);
 
         SDL_Rect spriteClips[16];

@@ -1,8 +1,8 @@
 #include "Player.hpp"
 #include "Constants.hpp"
-#include "Texture.hpp"
+#include "TextureManager.hpp"
 
-//Texture gPlayerTexture;
+//TextureManager gPlayerTexture;
 
 void Player::handleEvent(SDL_Event& e) {
     // key was pressed

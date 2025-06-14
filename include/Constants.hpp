@@ -6,7 +6,7 @@
 #include "SDL.h"
 
 /* extern SDL_Renderer* renderer_;
-extern Texture gTileTexture;
+extern TextureManager gTileTexture;
 extern SDL_Rect gTileClips[TOTAL_TILE_SPRITES]; */
 
 //Screen dimension constants

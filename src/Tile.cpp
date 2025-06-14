@@ -1,10 +1,10 @@
 #include "Tile.hpp"
 #include "Constants.hpp"
-#include "Texture.hpp"
-/* Texture gTileTexture;
+#include "TextureManager.hpp"
+/* TextureManager gTileTexture;
 SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ]; */
 
-Tile::Tile(int x, int y, int tileType, Texture* tileTexture, SDL_Rect* gTileClips) {
+Tile::Tile(int x, int y, int tileType, TextureManager* tileTexture, SDL_Rect* gTileClips) {
     // get offsets
     box_.x = x;
     box_.y = y;

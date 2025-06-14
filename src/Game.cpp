@@ -5,7 +5,7 @@
 #include "Tile.hpp"
 #include "fstream"
 
-/* Texture gTileTexture;
+/* TextureManager gTileTexture;
 SDL_Rect gTileClips[TOTAL_TILE_SPRITES]; */
 //SDL_Renderer* renderer_ = nullptr;
 
@@ -65,7 +65,7 @@ void Game::run() {
 	SDL_Event e;
 
     Player player;
-    Texture playerTexture;
+    TextureManager playerTexture;
 
     player.setTexture(&playerTexture);
     //player.setRenderer(renderer_);
@@ -163,7 +163,7 @@ void Game::run() {
     }
 }
 
-bool Game::loadMedia(Tile* tiles[], Texture* playerTexture) {
+bool Game::loadMedia(Tile* tiles[], TextureManager* playerTexture) {
 	// Loading success flag
 	bool success = true;
 

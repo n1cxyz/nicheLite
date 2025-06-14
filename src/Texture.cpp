@@ -1,17 +1,17 @@
-#include "Texture.hpp"
+#include "TextureManager.hpp"
 #include "SDL_image.h"
 
-Texture::Texture() {
+TextureManager::TextureManager() {
 	texture_ = nullptr;
 	width_ = 0;
 	height_ = 0;
 }
 
-Texture::~Texture() {
+TextureManager::~TextureManager() {
 	free();
 }
 
-bool Texture::loadFromFile(std::string path)
+bool TextureManager::loadFromFile(std::string path)
 {
 	//Get rid of preexisting texture
 	free();
@@ -52,7 +52,7 @@ bool Texture::loadFromFile(std::string path)
 	return texture_ != nullptr;
 }
 
-void Texture::free() {
+void TextureManager::free() {
 	//Free texture if it exists
 	if (texture_ != nullptr)
 	{
@@ -63,34 +63,34 @@ void Texture::free() {
 	}
 }
 
-void Texture::setColor(Uint8 red, Uint8 green, Uint8 blue) {
+void TextureManager::setColor(Uint8 red, Uint8 green, Uint8 blue) {
 	//Modulate texture rgb
 	SDL_SetTextureColorMod(texture_, red, green, blue);
 }
 		
-void Texture::setAlpha(Uint8 alpha) {
+void TextureManager::setAlpha(Uint8 alpha) {
 	//Modulate texture alpha
 	SDL_SetTextureAlphaMod(texture_, alpha);
 }
 
-void Texture::	render(int x, int y, SDL_Rect* clip) {
+void TextureManager::	render(int x, int y, SDL_Rect* clip) {
 	//Set rendering space and render to screen
 	SDL_Rect renderQuad = { x, y, clip ? clip->w : width_, clip ? clip->h : height_ };
 
 	if (renderer_ == nullptr) {
-		printf("Warning Texture::render\n");
+		printf("Warning TextureManager::render\n");
 	}
 	SDL_RenderCopy(renderer_, texture_, clip, &renderQuad);
 }
 
-int Texture::getWidth() {
+int TextureManager::getWidth() {
 	return width_;
 }
 
-int Texture::getHeight() {
+int TextureManager::getHeight() {
 	return height_;
 }
 
-SDL_Texture* Texture::getTexture() const {
+SDL_Texture* TextureManager::getTexture() const {
 	return texture_;
 }

@@ -11,7 +11,7 @@
 #include "AEntity.hpp"
 #include "Game.hpp"
 #include "Map.hpp"
-#include "Texture.hpp"
+#include "TextureManager.hpp"
 #include "Tile.hpp"
 #include "ACharacter.hpp"
 #include "Player.hpp"

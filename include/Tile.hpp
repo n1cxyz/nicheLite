@@ -2,18 +2,18 @@
 
 #include "SDL.h"
 
-class Texture;
+class TextureManager;
 
 class Tile {
     private:
         SDL_Rect box_;
         int type_;
 
-        Texture* tileTexture;
+        TextureManager* tileTexture;
         SDL_Rect* gTileClips;
 
     public:
-        Tile(int x, int y, int tileType, Texture* tileTexture, SDL_Rect* gTileClips);
+        Tile(int x, int y, int tileType, TextureManager* tileTexture, SDL_Rect* gTileClips);
         void render(SDL_Rect& camera);
 
         int getType();

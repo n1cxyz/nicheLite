@@ -5,7 +5,7 @@ bool touchesWall( SDL_Rect box, Tile* tiles[] );
 bool setTiles( Tile *tiles[] );
 
 //Scene textures
-Texture gDotTexture;
+TextureManager gDotTexture;
 
 //const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS
 
@@ -17,7 +17,7 @@ int main(void) {
     } else {
         game.run();
     }
-    /* Texture txt;
+    /* TextureManager txt;
     txt.loadFromFile("assets/trans_char.png");
     Player* man = new (Player);
     man->texture = &txt;
@@ -31,7 +31,7 @@ int main(void) {
             printf("Failed to load media!\n");
         }
         else {
-            Texture txt;
+            TextureManager txt;
             txt.loadFromFile("assets/trans_char.png");
             Player* man = new (Player);
             man->texture = &txt;

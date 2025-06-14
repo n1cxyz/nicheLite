@@ -2,7 +2,7 @@
 
 #include "SDL.h"
 #include "Constants.hpp"
-#include "Texture.hpp"
+#include "TextureManager.hpp"
 
 class Tile;
 
@@ -12,7 +12,7 @@ private:
     SDL_Window* window_ = nullptr;
     SDL_Renderer* renderer_ = nullptr;
 
-    Texture tileTexture;
+    TextureManager tileTexture;
     SDL_Rect gTileClips[TOTAL_TILE_SPRITES];
 
 public:
@@ -21,7 +21,7 @@ public:
 
     bool init();
     void run();
-    bool loadMedia(Tile* tiles[], Texture* playerTexture);
+    bool loadMedia(Tile* tiles[], TextureManager* playerTexture);
     void shutdown(Tile* tiles[]);
 
     //bool checkCollision(SDL_Rect a, SDL_Rect b);
