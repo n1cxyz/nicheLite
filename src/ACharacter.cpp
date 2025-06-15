@@ -8,14 +8,70 @@ ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(10) {
     box_.w = 64;
     box_.h = 64;
 
-    animations[{State::Idle, Direction::Down}] = Animation{
-        { 
-            {48, 48, 64, 64},
+    animations[{State::Idle, Direction::Down}] = Animation{ 
+        {   {48, 48, 64, 64},
             {112, 48, 64, 64},
-            {176, 48, 64, 64}
-        },
-        100 // ms per frame
+            {176, 48, 64, 64},
+            {240, 48, 64, 64},
+            {304, 48, 64, 64}   }, 100 // ms per frame
     };
+
+    animations[{State::Idle, Direction::Left}] = Animation{ 
+        {   {48, 48, 64, 64},
+            {112, 48, 64, 64},
+            {176, 48, 64, 64},
+            {240, 48, 64, 64},
+            {304, 48, 64, 64}   }, 100 // ms per frame
+    };
+
+    animations[{State::Idle, Direction::Right}] = Animation{ 
+        {   {48, 48, 64, 64},
+            {112, 48, 64, 64},
+            {176, 48, 64, 64},
+            {240, 48, 64, 64},
+            {304, 48, 64, 64}   }, 100 // ms per frame
+    };
+
+    animations[{State::Idle, Direction::Up}] = Animation{ 
+        {   {48, 48, 64, 64},
+            {112, 48, 64, 64},
+            {176, 48, 64, 64},
+            {240, 48, 64, 64},
+            {304, 48, 64, 64}   }, 100 // ms per frame
+    };
+
+    animations[{State::Run, Direction::Down}] = Animation{ 
+        {   {48, 48, 64, 64},
+            {112, 48, 64, 64},
+            {176, 48, 64, 64},
+            {240, 48, 64, 64},
+            {304, 48, 64, 64}   }, 100 // ms per frame
+    };
+
+    animations[{State::Run, Direction::Left}] = Animation{ 
+        {   {48, 48, 64, 64},
+            {112, 48, 64, 64},
+            {176, 48, 64, 64},
+            {240, 48, 64, 64},
+            {304, 48, 64, 64}   }, 100 // ms per frame
+    };
+
+    animations[{State::Run, Direction::Right}] = Animation{ 
+        {   {48, 48, 64, 64},
+            {112, 48, 64, 64},
+            {176, 48, 64, 64},
+            {240, 48, 64, 64},
+            {304, 48, 64, 64}   }, 100 // ms per frame
+    };
+
+    animations[{State::Run, Direction::Up}] = Animation{ 
+        {   {48, 48, 64, 64},
+            {112, 48, 64, 64},
+            {176, 48, 64, 64},
+            {240, 48, 64, 64},
+            {304, 48, 64, 64}   }, 100 // ms per frame
+    };
+    
 };
 ACharacter::~ACharacter() {};
 

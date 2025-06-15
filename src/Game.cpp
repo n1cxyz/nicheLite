@@ -170,13 +170,16 @@ bool Game::loadMedia(TextureManager& tm) {
 	bool success = true;
 
 	// Load player texture
-	if (!(tm.loadTexture({State::Idle, Direction::Down}, "assets/TopDownTemplateAnimations/SpriteSheets/Sword/Sword_1_Template_Idle_Down-Sheet.png")))	{
-		printf( "Failed to load player texture!\n" );
-		success = false;
-	} else {
-        // set sprite clips
-        printf("successfully loaded player texture\n");
+	if (!tm.loadTexture({State::Idle, Direction::Down}, "assets/TDTA/Sheets/Sword/Sword_1_ID.png")) {
+        return false;
     }
+    tm.loadTexture({State::Idle, Direction::Left}, "assets/TDTA/Sheets/Sword/Sword_1_IL.png");
+    tm.loadTexture({State::Idle, Direction::Right}, "assets/TDTA/Sheets/Sword/Sword_1_IR.png");
+    tm.loadTexture({State::Idle, Direction::Up}, "assets/TDTA/Sheets/Sword/Sword_1_IU.png");
+    tm.loadTexture({State::Run, Direction::Down}, "assets/TDTA/Sheets/Sword/Sword_2_RD.png");
+    tm.loadTexture({State::Run, Direction::Left}, "assets/TDTA/Sheets/Sword/Sword_2_RL.png");
+    tm.loadTexture({State::Run, Direction::Right}, "assets/TDTA/Sheets/Sword/Sword_2_RR.png");
+    tm.loadTexture({State::Run, Direction::Up}, "assets/TDTA/Sheets/Sword/Sword_2_RU.png");
 
     // load tile texture
     if (!tm.loadTexture("TILES", "assets/tiles.png")) {

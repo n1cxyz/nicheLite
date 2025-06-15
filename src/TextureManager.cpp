@@ -36,6 +36,7 @@ SDL_Texture* TextureManager::initTexture(const std::string& filePath) {
 bool TextureManager::loadTexture(const std::pair<State,Direction>& key, const std::string& filePath) {
 	SDL_Texture* newTexture = initTexture(filePath);
 	if (!newTexture) {
+		printf("Failed to load player Texture %s\n", filePath.c_str());
 		return false;
 	} 
 
@@ -48,6 +49,7 @@ bool TextureManager::loadTexture(const std::pair<State,Direction>& key, const st
 	// add texture to map
 	playerTextures_[key] = newTexture;
 
+	printf("Success loading player Texture %s\n", filePath.c_str());
 	return true;
 }
 
