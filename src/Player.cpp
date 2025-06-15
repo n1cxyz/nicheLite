@@ -2,9 +2,8 @@
 #include "Constants.hpp"
 #include "TextureManager.hpp"
 
-//TextureManager gPlayerTexture;
-
 void Player::handleEvent(SDL_Event& e) {
+    (void)e;
     // key was pressed
 /*     if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
         switch (e.key.keysym.sym) {

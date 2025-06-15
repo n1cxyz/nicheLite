@@ -9,7 +9,7 @@ class Tile;
 
 struct Animation {
     std::vector<SDL_Rect> frames;
-    int frameDuration;
+    Uint32 frameDuration;
 };
 
 class ACharacter : public AEntity {
@@ -20,7 +20,7 @@ class ACharacter : public AEntity {
 
         State currentState = State::Idle;
         Direction currentDirection = Direction::Down;
-        int currentFrameIndex = 0;
+        size_t currentFrameIndex = 0;
         Uint32 lastFrameTime = 0;
     
         // velocity

@@ -17,9 +17,6 @@ class AEntity {
         // collision box
         SDL_Rect box_;
 
-        // TextureManager* texture_ = nullptr;
-        //SDL_Renderer* renderer_ = nullptr;
-
     public:
         AEntity();
         //virtual void update() = 0;
@@ -27,7 +24,4 @@ class AEntity {
 
         //void render();
 
-        // void setTexture(TextureManager* txt);
-        // TextureManager* getTexture() const;
-        // void setRenderer(SDL_Renderer* renderer_);
 };

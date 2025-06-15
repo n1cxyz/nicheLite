@@ -7,11 +7,6 @@
 #include "SDL_image.h"
 #include "fstream"
 
-/* TextureManager gTileTexture;
-SDL_Rect gTileClips[TOTAL_TILE_SPRITES]; */
-//SDL_Renderer* renderer_ = nullptr;
-
-
 Game::Game() {}
 Game::~Game() {}
 
@@ -58,7 +53,7 @@ bool Game::init() {
     return success;
 }
 
-const int SCREEN_TICKS_PER_FRAME = 1000 / FPS;
+//const int SCREEN_TICKS_PER_FRAME = 1000 / FPS;
 
 void Game::run() {
 
@@ -68,42 +63,16 @@ void Game::run() {
     // Event handler
 	SDL_Event e;
 
-    //Tile* tileSet[TOTAL_TILES];
+    // camera
+    SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
     Player player;
 
     TextureManager& tm = TextureManager::getInstance();
 
     if (!loadMedia(tm)) {
-        printf( "Failed to load media!\n" );
-        return;
-    } else {
-        printf("Successfully loaded media!\n");
+        printf( "Failed to load media!\n" ); return;
     }
-
-    // SDL_SetTextureBlendMode(player.getTexture()->getTexture(), SDL_BLENDMODE_BLEND);
-
-/*     const int start_x = 36;
-    const int start_y = 50;
-    const int horizontal_space = 64;
-
-    for (int i = 0; i < 16; ++i) {
-        player.spriteClips[i].x = start_x + i * horizontal_space;
-        player.spriteClips[i].y = start_y;
-        player.spriteClips[i].w = 32;
-        player.spriteClips[i].h = 32;
-    } */
-
-    // current animation frame
-    //int frame = 0;
-    
-    // camera
-    SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
-
-/*     Timer fpsTimer;
-    Timer capTimer;
-    int countedFrames = 0;
-    fpsTimer.start(); */
     
     while (!quit) {
         //capTimer.start();
@@ -115,24 +84,14 @@ void Game::run() {
                 quit = true;
             }
 
-            //float avgFps = countedFrames / (fpsTimer.getTicks() / 1000.f);
-/*             if (avgFps > 2000000) {
-                avgFps = 0;
-            }  */
-
             // Handle player input
             player.handleEvent(e);           
         } 
         //player.setCamera(camera);
 
         // clear screen
-		//SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255)
-/*         static int r = 0;
-        SDL_SetRenderDrawColor(renderer_, r, 0, 0, 255);
-        r = (r + 1) % 256;
-		SDL_RenderClear(renderer_); */
-         
         SDL_RenderClear(renderer_);
+
         // render level
  		for (int i = 0; i < TOTAL_TILES; ++i) {
 			tileSet[i]->render(renderer_, camera);
@@ -140,37 +99,15 @@ void Game::run() {
 
         // render player
         //player.render(camera);
-        //SDL_Rect* currentClip = &player.spriteClips[frame / 4];
-        //assert(currentClip->w > 0 && currentClip->h > 0);
-/*         player.getTexture()->render(
-            (SCREEN_WIDTH - currentClip->w) / 2, 
-            (SCREEN_HEIGHT - currentClip->h) / 2, 
-            currentClip); */
-/* 
-        SDL_SetRenderDrawColor(renderer_, 255, 0, 0, 255);
-        SDL_Rect testRect = {50, 50, 100, 100};
-        SDL_RenderFillRect(renderer_, &testRect); */
 
         Uint32 currentTime = SDL_GetTicks();
+
         player.update(currentTime);
         player.move(tileSet);
         player.render(renderer_);
 
-       // ++frame;
-
-        // cycle animation
- /*        if (frame >= 16 * 4) {
-            frame = 0;
-        } */
         // update screen
         SDL_RenderPresent(renderer_);
-
-        //++countedFrames;
-        // if frame finished eaerly
-        /* int frameTicks = capTimer.getTicks();
-        if (frameTicks < SCREEN_TICKS_PER_FRAME) {
-            SDL_Delay(SCREEN_TICKS_PER_FRAME - frameTicks);
-        } */
     }
 }
 
@@ -380,7 +317,6 @@ bool touchesWall(SDL_Rect box, Tile* tiles[]) {
     for (int i = 0; i < TOTAL_TILES; ++i) {
         // if the tile is a wall type 
         if ((tiles[i]->getType() >= TILE_CENTER) && (tiles[i]->getType() <= TILE_TOPLEFT)) {
-            //printf("AAAAAAaaaaaaaaaaa\n");
             // if the collision box touches the wall tile
             if (checkCollision(box, tiles[i]->getBox())) {
                 //printf("touches wall\n");
@@ -391,7 +327,3 @@ bool touchesWall(SDL_Rect box, Tile* tiles[]) {
 
     return false;
 }
-
-/* SDL_Renderer* Game::getRenderer() const {
-    return renderer_;
-} */

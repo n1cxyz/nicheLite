@@ -22,9 +22,9 @@ public:
     bool init();
     void run();
     bool loadMedia(TextureManager& tm);
-   // void shutdown(Tile* tiles[]);
+    // void shutdown(Tile* tiles[]);
 
-    bool checkCollision(SDL_Rect a, SDL_Rect b);
+    //bool checkCollision(SDL_Rect a, SDL_Rect b);
     bool setTiles(Tile* tiles[]);
     //bool touchesWall(SDL_Rect box, Tile* tiles[]);
 

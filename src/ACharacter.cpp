@@ -3,10 +3,6 @@
 #include "TextureManager.hpp"
 
 ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(4) {
-    box_.x = 0;
-    box_.y = 0;
-    box_.w = 32;
-    box_.h = 32;
 
     std::vector<SDL_Rect>frames = {
         {48, 48, 32, 32},
@@ -19,13 +15,12 @@ ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(4) {
     std::vector<State> states = {State::Idle, State::Run};
     std::vector<Direction> directions = {Direction::Down, Direction::Left, Direction::Right, Direction::Up};
 
-
     for (const auto& state : states) {
         for (const auto& dir : directions) {
             if (state == State::Idle) {
-                animations[{state, dir}] = Animation{ frames, 200 };  // Idle/Down with 200ms per frame
+                animations[{state, dir}] = Animation{ frames, 200 };
             } else {
-                animations[{state, dir}] = Animation{ frames, 100 };    // Others with 100ms per frame
+                animations[{state, dir}] = Animation{ frames, 100 };
             }
         }
     }    
@@ -33,40 +28,41 @@ ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(4) {
 ACharacter::~ACharacter() {};
 
 void ACharacter::render(SDL_Renderer* renderer) {
-    const auto key = std::make_pair(currentState, currentDirection); //?
-    if (animations.find(key) == animations.end()) {
-        SDL_Log("Missing animation for state=%d, dir=%d", (int)currentState, (int)currentDirection);
+    std::pair<State, Direction> key = {currentState, currentDirection};
+
+    // Get animation
+    auto animIt = animations.find(key);
+    if (animIt == animations.end() || animIt->second.frames.empty()) {
+        SDL_Log("Missing or empty animation for state=%d, dir=%d", (int)currentState, (int)currentDirection);
         return;
     }
-    const Animation& anim = animations[{currentState, currentDirection}];
-    if (anim.frames.empty()) {
-        SDL_Log("Frames are empty!");
-        return;
-    }
+
+    const Animation& anim = animIt->second;
+
+    // Validate frame index
     if (currentFrameIndex >= anim.frames.size()) {
-        SDL_Log("Invalid frame index: %d >= %zu", currentFrameIndex, anim.frames.size());
+        SDL_Log("Frame index out of bounds: %zu (size=%zu). Resetting.", currentFrameIndex, anim.frames.size());
         currentFrameIndex = 0;
-        return;
     }
+
     const SDL_Rect& srcRect = anim.frames[currentFrameIndex];
+    SDL_Rect destRect = {box_.x, box_.y, srcRect.w * 3, srcRect.h * 3};
 
-    SDL_Rect dest = {box_.x, box_.y, srcRect.w * 3, srcRect.h * 3};
-    TextureManager& tm = TextureManager::getInstance();
-
-    //SDL_Log("Render: state = %d, dir = %d", static_cast<int>(currentState), static_cast<int>(currentDirection));
-    SDL_Texture* tex = tm.getTexture(key); //?
-    if (!tex) SDL_Log("❌ Texture not found for this state/direction");
-
+    // Get texture
+    SDL_Texture* tex = TextureManager::getInstance().getTexture(key);
     if (!tex) {
-        SDL_Log("Texture is null! State: %d, Dir: %d", (int)currentState, (int)currentDirection);
+        SDL_Log("Texture not found for state=%d, dir=%d", (int)currentState, (int)currentDirection);
         return;
     }
 
-    SDL_Log("🔎 Rendering frame idx=%d for state=%d dir=%d", currentFrameIndex, (int)currentState, (int)currentDirection);
+    // draw player hitbox
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); 
+    SDL_RenderDrawRect(renderer, &box_);
 
-    //const SDL_Rect& srcRectt = anim.frames[0];
-    SDL_RenderCopy(renderer, tex, &srcRect, &dest);
+    // Render
+    SDL_RenderCopy(renderer, tex, &srcRect, &destRect);
 }
+
 
 void ACharacter::update(Uint32 currentTime) {
     const Uint8* keystate = SDL_GetKeyboardState(nullptr);
@@ -99,7 +95,7 @@ void ACharacter::update(Uint32 currentTime) {
 
     auto it = animations.find({currentState, currentDirection});
     if (it == animations.end()) {
-        SDL_Log("❌ Missing animation for state=%d, dir=%d", static_cast<int>(currentState), static_cast<int>(currentDirection));
+        SDL_Log("Missing animation for state=%d, dir=%d", static_cast<int>(currentState), static_cast<int>(currentDirection));
         return;
     }
     const Animation& anim = it->second;
@@ -143,18 +139,4 @@ void ACharacter::move(Tile *tiles[]) {
     if ((box_.y < 0) || (box_.y + height_ > SCREEN_HEIGHT) || touchesWall(box_, tiles)) {
         box_.y -= velY_;
     }
-
-/*     // Move left or right
-    posX_ += velX_;
-
-    // If moved too far or touched Wall
-    if ((posX_ < 0) || (posX_ + width_ > SCREEN_WIDTH)) {
-        posX_ -= velX_;
-    }
-    // Move up or down
-    posY_ += velY_;
-
-    if ((posY_ < 0) || (posY_ + height_ > SCREEN_HEIGHT)) {
-        posY_ -= velY_;
-    } */
 }

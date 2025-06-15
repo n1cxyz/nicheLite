@@ -15,11 +15,7 @@ class TextureManager {
         std::unordered_map<std::string, SDL_Texture*> tileTextures_;
     
         SDL_Renderer* renderer_;
-/*         SDL_Texture* texture_;
-        SDL_Renderer* renderer_ = nullptr;
 
-        int width_;
-        int height_; */
     public:
         static TextureManager& getInstance() {
             static TextureManager instance;
@@ -27,22 +23,18 @@ class TextureManager {
         }
 
         SDL_Texture* initTexture(const std::string& filePath);
+       
         bool loadTexture(const std::pair<State,Direction>& key, const std::string& filePath);
         bool loadTexture(const std::string& key, const std::string& filePath);
 
         SDL_Texture* getTexture(const std::pair<State,Direction>& key);
         SDL_Texture* getTexture(const std::string& key);
-        void setRenderer(SDL_Renderer* renderer) { this->renderer_ = renderer; }
-        //void render(int x, int y, SDL_Rect* clip = nullptr);
         
-        //void free(SDL_Texture* txt);
-        //void clear();
-        /*
-        void setColor(Uint8 red, Uint8 green, Uint8 blue);
-        void setAlpha(Uint8 alpha);
+        void setRenderer(SDL_Renderer* renderer) { this->renderer_ = renderer; }
+        
+/*         void free(SDL_Texture* txt);
+        void clear();
 
-        SDL_Texture* getTexture() const;
-        int getWidth();
-        int getHeight();
-        void setRenderer(SDL_Renderer* renderer_) {this->renderer_ = renderer_;} */
+        void setColor(Uint8 red, Uint8 green, Uint8 blue);
+        void setAlpha(Uint8 alpha); */
 };

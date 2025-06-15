@@ -1,8 +1,6 @@
 #include "Tile.hpp"
 #include "Constants.hpp"
 #include "TextureManager.hpp"
-/* TextureManager gTileTexture;
-SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ]; */
 
 Tile::Tile(int x, int y, int type, SDL_Rect* clip) {
     // get offsets
