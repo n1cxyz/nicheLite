@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "iostream"
 #include "unordered_map"
+#include "ACharacter.hpp"
 
 class TextureManager {
     private:

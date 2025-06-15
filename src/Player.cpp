@@ -6,12 +6,12 @@
 
 void Player::handleEvent(SDL_Event& e) {
     // key was pressed
-    if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+/*     if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
         switch (e.key.keysym.sym) {
-            case SDLK_UP: velY_ -= maxVel_; break;
-            case SDLK_DOWN: velY_ += maxVel_; break;
-            case SDLK_LEFT: velX_ -= maxVel_; break;
-            case SDLK_RIGHT: velX_ += maxVel_; break;
+            case SDLK_UP: velY_ -= maxVel_; setDirection(Direction::Up); setState(State::Run); break;
+            case SDLK_DOWN: velY_ += maxVel_; setDirection(Direction::Down); setState(State::Run); break;
+            case SDLK_LEFT: velX_ -= maxVel_; setDirection(Direction::Left); setState(State::Run); break;
+            case SDLK_RIGHT: velX_ += maxVel_; setDirection(Direction::Right); setState(State::Run); break;
         }
     } 
     // key was released
@@ -22,7 +22,7 @@ void Player::handleEvent(SDL_Event& e) {
             case SDLK_LEFT: velX_ += maxVel_; break;
             case SDLK_RIGHT: velX_ -= maxVel_; break;
         }
-    }
+    } */
 }
 
 /* void Player::setCamera(SDL_Rect& camera) {

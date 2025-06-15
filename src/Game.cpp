@@ -58,7 +58,7 @@ bool Game::init() {
     return success;
 }
 
-const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+//const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 void Game::run() {
 
@@ -123,8 +123,6 @@ void Game::run() {
             // Handle player input
             player.handleEvent(e);           
         }
-
-        player.move(tileSet);
         //player.setCamera(camera);
 
         // clear screen
@@ -146,6 +144,7 @@ void Game::run() {
             currentClip); */
         Uint32 currentTime = SDL_GetTicks();
         player.update(currentTime);
+        player.move(tileSet);
         player.render(renderer_);
 
        // ++frame;
@@ -171,7 +170,7 @@ bool Game::loadMedia(TextureManager& tm) {
 	bool success = true;
 
 	// Load player texture
-	if (!(tm.loadTexture("PLAYER_IDLE", "assets/armored15_idle_down.png")))	{
+	if (!(tm.loadTexture("PLAYER_SWORD_IDLE_DOWN", "assets/TopDownTemplateAnimations/SpriteSheets/Sword/Sword_1_Template_Idle_Down-Sheet.png")))	{
 		printf( "Failed to load player texture!\n" );
 		success = false;
 	} else {
@@ -262,6 +261,7 @@ bool Game::setTiles(Tile* tiles[]) {
     if (map.fail()) {
         printf("Unable to load map file!\n");
         tilesLoaded = false;
+        return false;
     } else {
         // init tiles
         for (int i = 0; i < TOTAL_TILES; ++i) {
