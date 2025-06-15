@@ -1,10 +1,9 @@
 #include "TextureManager.hpp"
 #include "SDL_image.h"
+#include "EnumPairHash.hpp"
 
 
-
-bool TextureManager::loadTexture(const std::string& id, const std::string& filePath) {
-
+SDL_Texture* TextureManager::initTexture(const std::string& filePath) {
 	//Get rid of preexisting texture
 	//free();
 
@@ -31,21 +30,62 @@ bool TextureManager::loadTexture(const std::string& id, const std::string& fileP
 		//Get rid of old loaded surface
 		SDL_FreeSurface(loadedSurface);
 	}
+	return newTexture;
+}
 
-	auto it = textures_.find(id);
-	if (it != textures_.end()) {
+bool TextureManager::loadTexture(const std::pair<State,Direction>& key, const std::string& filePath) {
+	SDL_Texture* newTexture = initTexture(filePath);
+	if (!newTexture) {
+		return false;
+	} 
+
+	auto it = playerTextures_.find(key);
+	if (it != playerTextures_.end()) {
 		SDL_DestroyTexture(it->second);
+		playerTextures_.erase(it);
 	}
 
 	// add texture to map
-	textures_[id] = newTexture;
+	playerTextures_[key] = newTexture;
 
 	return true;
 }
 
+bool TextureManager::loadTexture(const std::string& key, const std::string& filePath) {
+
+	SDL_Texture* newTexture = initTexture(filePath);
+	if (!newTexture) {
+		return false;
+	} 
+
+	auto it = tileTextures_.find(key);
+	if (it != tileTextures_.end()) {
+		SDL_DestroyTexture(it->second);
+		tileTextures_.erase(it);
+	}
+
+	// add texture to map
+	tileTextures_[key] = newTexture;
+
+	return true;
+}
+
+SDL_Texture* TextureManager::getTexture(const std::pair<State,Direction>& key) {
+	auto it = playerTextures_.find(key);
+    if (it != playerTextures_.end()) {
+        return it->second;
+    }
+	printf("missing texture!\n");
+	return nullptr;
+}
+
 SDL_Texture* TextureManager::getTexture(const std::string& key) {
-	SDL_Texture* tex = textures_.at(key);
-	return tex;
+	auto it = tileTextures_.find(key);
+    if (it != tileTextures_.end()) {
+        return it->second;
+    }
+	printf("missing texture!\n");
+	return nullptr;
 }
 /* void TextureManager::free(SDL_Texture* txt) {
 	//Free texture if it exists

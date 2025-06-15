@@ -26,7 +26,7 @@ void ACharacter::render(SDL_Renderer* renderer) {
     SDL_Rect dest = {box_.x, box_.y, srcRect.w * 2, srcRect.h * 2};
     TextureManager& tm = TextureManager::getInstance();
 
-    SDL_RenderCopy(renderer, tm.getTexture("PLAYER_SWORD_IDLE_DOWN"), &srcRect, &dest);
+    SDL_RenderCopy(renderer, tm.getTexture({currentState, currentDirection}), &srcRect, &dest);
 }
 
 void ACharacter::update(Uint32 currentTime) {

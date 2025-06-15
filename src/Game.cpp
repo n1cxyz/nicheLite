@@ -170,7 +170,7 @@ bool Game::loadMedia(TextureManager& tm) {
 	bool success = true;
 
 	// Load player texture
-	if (!(tm.loadTexture("PLAYER_SWORD_IDLE_DOWN", "assets/TopDownTemplateAnimations/SpriteSheets/Sword/Sword_1_Template_Idle_Down-Sheet.png")))	{
+	if (!(tm.loadTexture({State::Idle, Direction::Down}, "assets/TopDownTemplateAnimations/SpriteSheets/Sword/Sword_1_Template_Idle_Down-Sheet.png")))	{
 		printf( "Failed to load player texture!\n" );
 		success = false;
 	} else {

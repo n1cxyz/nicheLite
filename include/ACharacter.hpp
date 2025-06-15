@@ -3,21 +3,13 @@
 #include "AEntity.hpp"
 #include <vector>
 #include <unordered_map>
+#include "EnumPairHash.hpp"
 
 class Tile;
-
-enum class State { Idle, Run, Attack };
-enum class Direction { Left, Right, Up, Down };
 
 struct Animation {
     std::vector<SDL_Rect> frames;
     int frameDuration;
-};
-
-struct EnumPairHash {
-    std::size_t operator()(const std::pair<State, Direction>& p) const {
-        return std::hash<int>()(static_cast<int>(p.first)) ^ (std::hash<int>()(static_cast<int>(p.second)) << 1);
-    }
 };
 
 class ACharacter : public AEntity {
