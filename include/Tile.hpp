@@ -7,10 +7,10 @@ class Tile {
         SDL_Rect box_;
         int type_;
 
-        SDL_Rect* gTileClips;
+        SDL_Rect* clip_;
 
     public:
-        Tile(int x, int y, int tileType, SDL_Rect* gTileClips);
+        Tile(int x, int y, int type, SDL_Rect* clip);
         void render(SDL_Renderer* renderer, SDL_Rect& camera);
 
         int getType();

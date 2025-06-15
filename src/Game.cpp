@@ -275,10 +275,9 @@ bool Game::setTiles(Tile* tiles[]) {
                 tilesLoaded = false;
                 break;
             }
-
             // if the number is a valid tile number
             if ((tileType >= 0) && (tileType < TOTAL_TILE_SPRITES)) {
-                tiles[i] = new Tile(x, y, tileType, gTileClips);
+                tiles[i] = new Tile(x, y, tileType, &gTileClips[tileType]);
             } else {
                 printf("Error loading map: Invalid tile type at %d!\n", i);
                 tilesLoaded = false;
