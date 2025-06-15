@@ -3,7 +3,7 @@
 #include "Timer.hpp"
 #include "Tile.hpp"
 //#include "TextureManager.hpp"
-
+//#include "SDL.h"
 #include "SDL_image.h"
 #include "fstream"
 
@@ -86,7 +86,7 @@ void Game::run() {
 
     // SDL_SetTextureBlendMode(player.getTexture()->getTexture(), SDL_BLENDMODE_BLEND);
 
-    const int start_x = 36;
+/*     const int start_x = 36;
     const int start_y = 50;
     const int horizontal_space = 64;
 
@@ -95,7 +95,7 @@ void Game::run() {
         player.spriteClips[i].y = start_y;
         player.spriteClips[i].w = 32;
         player.spriteClips[i].h = 32;
-    }
+    } */
 
     // current animation frame
     int frame = 0;
@@ -141,13 +141,15 @@ void Game::run() {
 
         // render player
         //player.render(camera);
-        SDL_Rect* currentClip = &player.spriteClips[frame / 4];
+        //SDL_Rect* currentClip = &player.spriteClips[frame / 4];
         //assert(currentClip->w > 0 && currentClip->h > 0);
 /*         player.getTexture()->render(
             (SCREEN_WIDTH - currentClip->w) / 2, 
             (SCREEN_HEIGHT - currentClip->h) / 2, 
             currentClip); */
-
+        Uint32 currentTime = SDL_GetTicks();
+        player.update(currentTime);
+        player.render(renderer_, tm.getTexture("PLAYER_IDLE"));
 
         ++frame;
 
@@ -172,7 +174,7 @@ bool Game::loadMedia(TextureManager& tm) {
 	bool success = true;
 
 	// Load player texture
-	if (tm.loadTexture("PLAYER_RUN", "assets/Samurai/RUN.png"))	{
+	if (!(tm.loadTexture("PLAYER_IDLE", "assets/armored15_idle_down.png")))	{
 		printf( "Failed to load player texture!\n" );
 		success = false;
 	} else {
@@ -198,7 +200,7 @@ bool Game::loadMedia(TextureManager& tm) {
     return success;
 }
 
-void Game::shutdown(Tile* tiles[]) {
+/* void Game::shutdown(Tile* tiles[]) {
     for (int i = 0; i < TOTAL_TILES; ++i) {
         if (tiles[i] != nullptr) {
             delete tiles[i];
@@ -215,7 +217,7 @@ void Game::shutdown(Tile* tiles[]) {
 
     IMG_Quit();
     SDL_Quit();
-}
+} */
 
 bool checkCollision(SDL_Rect a, SDL_Rect b) {
     // sides of rectangles
@@ -253,7 +255,7 @@ bool checkCollision(SDL_Rect a, SDL_Rect b) {
     return true;
 }
 
-bool Game::setTiles(Tile* tiles[]) {
+/* bool Game::setTiles(Tile* tiles[]) {
     bool tilesLoaded = true;
 
     int x = 0, y = 0;
@@ -362,9 +364,9 @@ bool Game::setTiles(Tile* tiles[]) {
         //printf("Success\n");
         return tilesLoaded;
     }
-}
+} */
 
-bool touchesWall(SDL_Rect box, Tile* tiles[]) {
+/* bool touchesWall(SDL_Rect box, Tile* tiles[]) {
     for (int i = 0; i < TOTAL_TILES; ++i) {
         // if the tile is a wall type 
         if ((tiles[i]->getType() >= TILE_CENTER) && (tiles[i]->getType() <= TILE_TOPLEFT)) {
@@ -378,8 +380,8 @@ bool touchesWall(SDL_Rect box, Tile* tiles[]) {
     }
 
     return false;
-}
+} */
 
-SDL_Renderer* Game::getRenderer() const {
+/* SDL_Renderer* Game::getRenderer() const {
     return renderer_;
-}
+} */

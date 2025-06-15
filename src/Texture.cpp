@@ -32,10 +32,15 @@ bool TextureManager::loadTexture(const std::string& id, const std::string& fileP
 		SDL_FreeSurface(loadedSurface);
 	}
 
+	auto it = textures_.find(id);
+	if (it != textures_.end()) {
+		SDL_DestroyTexture(it->second);
+	}
+
 	// add texture to map
 	textures_[id] = newTexture;
 
-	return newTexture != nullptr;
+	return true;
 }
 
 SDL_Texture* TextureManager::getTexture(const std::string& key) {

@@ -1,11 +1,9 @@
 #include "Game.hpp"
 
-bool checkCollision( SDL_Rect a, SDL_Rect b );
+/* bool checkCollision( SDL_Rect a, SDL_Rect b );
 bool touchesWall( SDL_Rect box, Tile* tiles[] );
-bool setTiles( Tile *tiles[] );
+bool setTiles( Tile *tiles[] ); */
 
-//Scene textures
-TextureManager gDotTexture;
 
 //const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS
 

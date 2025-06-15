@@ -4,7 +4,7 @@
 
 class TextureManager;
 
-class Tile {
+/* class Tile {
     private:
         SDL_Rect box_;
         int type_;
@@ -18,4 +18,4 @@ class Tile {
 
         int getType();
         SDL_Rect getBox();
-};
+}; */

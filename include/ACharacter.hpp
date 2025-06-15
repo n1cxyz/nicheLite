@@ -18,7 +18,7 @@ class ACharacter : public AEntity {
         // map of animations
         std::unordered_map<State, Animation> animations;
 
-        State currentState = State::Run;
+        State currentState = State::Idle;
         int currentFrameIndex = 0;
         Uint32 lastFrameTime = 0;
     
@@ -37,7 +37,7 @@ class ACharacter : public AEntity {
         //void move(Tile* tiles[]);
 
         void update(Uint32 currentTime);
-        void render(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect& desRect);
+        void render(SDL_Renderer* renderer, SDL_Texture* texture);
         void setState(State newState);
 
         State getState() const { return currentState; }

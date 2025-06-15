@@ -4,7 +4,7 @@
 /* TextureManager gTileTexture;
 SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ]; */
 
-Tile::Tile(int x, int y, int tileType, TextureManager* tileTexture, SDL_Rect* gTileClips) {
+/* Tile::Tile(int x, int y, int tileType, TextureManager* tileTexture, SDL_Rect* gTileClips) {
     // get offsets
     box_.x = x;
     box_.y = y;
@@ -32,4 +32,4 @@ int Tile::getType() {
 
 SDL_Rect Tile::getBox() {
     return box_;
-}
+} */
