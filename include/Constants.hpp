@@ -42,4 +42,4 @@ const int WALKING_ANIMATION_FRAMES = 16;
 
 bool checkCollision(SDL_Rect a, SDL_Rect b);
 //bool setTiles(Tile* tiles[]);
-//bool touchesWall(SDL_Rect box, Tile* tiles[]);
+bool touchesWall(SDL_Rect box, Tile* tiles[]);

@@ -363,7 +363,7 @@ bool Game::setTiles(Tile* tiles[]) {
     }
 }
 
-/* bool touchesWall(SDL_Rect box, Tile* tiles[]) {
+bool touchesWall(SDL_Rect box, Tile* tiles[]) {
     for (int i = 0; i < TOTAL_TILES; ++i) {
         // if the tile is a wall type 
         if ((tiles[i]->getType() >= TILE_CENTER) && (tiles[i]->getType() <= TILE_TOPLEFT)) {
@@ -378,7 +378,7 @@ bool Game::setTiles(Tile* tiles[]) {
 
     return false;
 }
-*/
+
 /* SDL_Renderer* Game::getRenderer() const {
     return renderer_;
 } */

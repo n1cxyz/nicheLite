@@ -3,6 +3,10 @@
 #include "TextureManager.hpp"
 
 ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(10) {
+    box_.x = 0;
+    box_.y = 0;
+    box_.w = 32;
+    box_.h = 32;
 
     animations[State::Idle] = Animation{
         { {0, 0, 64, 64} },
@@ -14,11 +18,12 @@ ACharacter::~ACharacter() {};
 void ACharacter::render(SDL_Renderer* renderer) {
     const Animation& anim = animations[currentState];
     const SDL_Rect& srcRect = anim.frames[currentFrameIndex];
-    SDL_Rect dest = {
+/*     SDL_Rect dest = {
         static_cast<int>(posX_), 
         static_cast<int>(posY_),
-        srcRect.w * 2, srcRect.h * 2
-    };
+        srcRect.w, srcRect.h
+    }; */
+    SDL_Rect dest = {box_.x, box_.y, srcRect.w, srcRect.h};
     TextureManager& tm = TextureManager::getInstance();
 
     SDL_RenderCopy(renderer, tm.getTexture("PLAYER_IDLE"), &srcRect, &dest);
@@ -42,7 +47,7 @@ void ACharacter::setState(State newState) {
 }
 
 void ACharacter::move(Tile *tiles[]) {
-/*     // Move left or right
+    // Move left or right
     box_.x += velX_;
 
     // If moved too far or touched Wall
@@ -54,10 +59,10 @@ void ACharacter::move(Tile *tiles[]) {
 
     if ((box_.y < 0) || (box_.y + height_ > SCREEN_HEIGHT) || touchesWall(box_, tiles)) {
         box_.y -= velY_;
-    } */
+    }
 
 
-    // Move left or right
+/*     // Move left or right
     posX_ += velX_;
 
     // If moved too far or touched Wall
@@ -69,5 +74,5 @@ void ACharacter::move(Tile *tiles[]) {
 
     if ((posY_ < 0) || (posY_ + height_ > SCREEN_HEIGHT)) {
         posY_ -= velY_;
-    }
+    } */
 }
