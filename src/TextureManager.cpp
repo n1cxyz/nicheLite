@@ -21,11 +21,9 @@ SDL_Texture* TextureManager::initTexture(const std::string& filePath) {
         newTexture = SDL_CreateTextureFromSurface(renderer_, loadedSurface);
 		if (newTexture == nullptr) {
 			printf( "Unable to create texture from %s! SDL Error: %s\n", filePath.c_str(), SDL_GetError() );
-		} /* 		else {
-			//Get image dimensions
-			width_ = loadedSurface->w;
-			height_ = loadedSurface->h;
-		} */
+		} else {
+			SDL_SetTextureBlendMode(newTexture, SDL_BLENDMODE_BLEND);
+		} 
 
 		//Get rid of old loaded surface
 		SDL_FreeSurface(loadedSurface);
@@ -48,6 +46,7 @@ bool TextureManager::loadTexture(const std::pair<State,Direction>& key, const st
 
 	// add texture to map
 	playerTextures_[key] = newTexture;
+	SDL_Log("Added texture: state=%d, dir=%d", static_cast<int>(key.first), static_cast<int>(key.second));
 
 	printf("Success loading player Texture %s\n", filePath.c_str());
 	return true;

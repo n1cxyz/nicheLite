@@ -1,6 +1,6 @@
 #pragma once
 
-#define SCREEN_FPS 60
+//#define SCREEN_FPS 60
 
 #include "Tile.hpp"
 #include "SDL.h"
@@ -8,6 +8,8 @@
 /* extern SDL_Renderer* renderer_;
 extern TextureManager gTileTexture;
 extern SDL_Rect gTileClips[TOTAL_TILE_SPRITES]; */
+
+const int FPS = 60;
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1280;

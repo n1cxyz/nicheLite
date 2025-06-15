@@ -2,87 +2,70 @@
 #include "Constants.hpp"
 #include "TextureManager.hpp"
 
-ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(10) {
+ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(4) {
     box_.x = 0;
     box_.y = 0;
-    box_.w = 64;
-    box_.h = 64;
+    box_.w = 32;
+    box_.h = 32;
 
-    animations[{State::Idle, Direction::Down}] = Animation{ 
-        {   {48, 48, 64, 64},
-            {112, 48, 64, 64},
-            {176, 48, 64, 64},
-            {240, 48, 64, 64},
-            {304, 48, 64, 64}   }, 100 // ms per frame
+    std::vector<SDL_Rect>frames = {
+        {48, 48, 32, 32},
+        {176, 48, 32, 32},
+        {304, 48, 32, 32},
+        {432, 48, 32, 32},
+        {560, 48, 32, 32}
     };
 
-    animations[{State::Idle, Direction::Left}] = Animation{ 
-        {   {48, 48, 64, 64},
-            {112, 48, 64, 64},
-            {176, 48, 64, 64},
-            {240, 48, 64, 64},
-            {304, 48, 64, 64}   }, 100 // ms per frame
-    };
+    std::vector<State> states = {State::Idle, State::Run};
+    std::vector<Direction> directions = {Direction::Down, Direction::Left, Direction::Right, Direction::Up};
 
-    animations[{State::Idle, Direction::Right}] = Animation{ 
-        {   {48, 48, 64, 64},
-            {112, 48, 64, 64},
-            {176, 48, 64, 64},
-            {240, 48, 64, 64},
-            {304, 48, 64, 64}   }, 100 // ms per frame
-    };
 
-    animations[{State::Idle, Direction::Up}] = Animation{ 
-        {   {48, 48, 64, 64},
-            {112, 48, 64, 64},
-            {176, 48, 64, 64},
-            {240, 48, 64, 64},
-            {304, 48, 64, 64}   }, 100 // ms per frame
-    };
-
-    animations[{State::Run, Direction::Down}] = Animation{ 
-        {   {48, 48, 64, 64},
-            {112, 48, 64, 64},
-            {176, 48, 64, 64},
-            {240, 48, 64, 64},
-            {304, 48, 64, 64}   }, 100 // ms per frame
-    };
-
-    animations[{State::Run, Direction::Left}] = Animation{ 
-        {   {48, 48, 64, 64},
-            {112, 48, 64, 64},
-            {176, 48, 64, 64},
-            {240, 48, 64, 64},
-            {304, 48, 64, 64}   }, 100 // ms per frame
-    };
-
-    animations[{State::Run, Direction::Right}] = Animation{ 
-        {   {48, 48, 64, 64},
-            {112, 48, 64, 64},
-            {176, 48, 64, 64},
-            {240, 48, 64, 64},
-            {304, 48, 64, 64}   }, 100 // ms per frame
-    };
-
-    animations[{State::Run, Direction::Up}] = Animation{ 
-        {   {48, 48, 64, 64},
-            {112, 48, 64, 64},
-            {176, 48, 64, 64},
-            {240, 48, 64, 64},
-            {304, 48, 64, 64}   }, 100 // ms per frame
-    };
-    
+    for (const auto& state : states) {
+        for (const auto& dir : directions) {
+            if (state == State::Idle) {
+                animations[{state, dir}] = Animation{ frames, 200 };  // Idle/Down with 200ms per frame
+            } else {
+                animations[{state, dir}] = Animation{ frames, 100 };    // Others with 100ms per frame
+            }
+        }
+    }    
 };
 ACharacter::~ACharacter() {};
 
 void ACharacter::render(SDL_Renderer* renderer) {
+    const auto key = std::make_pair(currentState, currentDirection); //?
+    if (animations.find(key) == animations.end()) {
+        SDL_Log("Missing animation for state=%d, dir=%d", (int)currentState, (int)currentDirection);
+        return;
+    }
     const Animation& anim = animations[{currentState, currentDirection}];
+    if (anim.frames.empty()) {
+        SDL_Log("Frames are empty!");
+        return;
+    }
+    if (currentFrameIndex >= anim.frames.size()) {
+        SDL_Log("Invalid frame index: %d >= %zu", currentFrameIndex, anim.frames.size());
+        currentFrameIndex = 0;
+        return;
+    }
     const SDL_Rect& srcRect = anim.frames[currentFrameIndex];
 
-    SDL_Rect dest = {box_.x, box_.y, srcRect.w * 2, srcRect.h * 2};
+    SDL_Rect dest = {box_.x, box_.y, srcRect.w * 3, srcRect.h * 3};
     TextureManager& tm = TextureManager::getInstance();
 
-    SDL_RenderCopy(renderer, tm.getTexture({currentState, currentDirection}), &srcRect, &dest);
+    //SDL_Log("Render: state = %d, dir = %d", static_cast<int>(currentState), static_cast<int>(currentDirection));
+    SDL_Texture* tex = tm.getTexture(key); //?
+    if (!tex) SDL_Log("❌ Texture not found for this state/direction");
+
+    if (!tex) {
+        SDL_Log("Texture is null! State: %d, Dir: %d", (int)currentState, (int)currentDirection);
+        return;
+    }
+
+    SDL_Log("🔎 Rendering frame idx=%d for state=%d dir=%d", currentFrameIndex, (int)currentState, (int)currentDirection);
+
+    //const SDL_Rect& srcRectt = anim.frames[0];
+    SDL_RenderCopy(renderer, tex, &srcRect, &dest);
 }
 
 void ACharacter::update(Uint32 currentTime) {
@@ -114,12 +97,19 @@ void ACharacter::update(Uint32 currentTime) {
         setState(State::Idle);
     }
 
-    const Animation& anim = animations[{currentState, currentDirection}];
+    auto it = animations.find({currentState, currentDirection});
+    if (it == animations.end()) {
+        SDL_Log("❌ Missing animation for state=%d, dir=%d", static_cast<int>(currentState), static_cast<int>(currentDirection));
+        return;
+    }
+    const Animation& anim = it->second;
 
-    if (currentTime - lastFrameTime >= anim.frameDuration) {
+    if (currentTime - lastFrameTime >= anim.frameDuration && !anim.frames.empty()) {
         currentFrameIndex = (currentFrameIndex + 1) % anim.frames.size();
         lastFrameTime = currentTime;
     }
+
+    //SDL_Log("Update: velocity (%d, %d), state = %d, dir = %d", velX_, velY_, static_cast<int>(currentState), static_cast<int>(currentDirection));
 }
 
 void ACharacter::setState(State newState) {
