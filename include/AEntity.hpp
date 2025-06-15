@@ -15,7 +15,7 @@ class AEntity {
         const int height_;
 
         // collision box
-        // SDL_Rect box_;
+        SDL_Rect box_;
 
         // TextureManager* texture_ = nullptr;
         //SDL_Renderer* renderer_ = nullptr;

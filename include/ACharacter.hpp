@@ -34,10 +34,10 @@ class ACharacter : public AEntity {
         virtual ~ACharacter();
 
         // moves and cheks for collision
-        //void move(Tile* tiles[]);
+        void move(Tile* tiles[]);
 
         void update(Uint32 currentTime);
-        void render(SDL_Renderer* renderer, SDL_Texture* texture);
+        void render(SDL_Renderer* renderer);
         void setState(State newState);
 
         State getState() const { return currentState; }

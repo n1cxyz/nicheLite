@@ -62,20 +62,17 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 void Game::run() {
 
-    //Tile* tileSet[TOTAL_TILES];
-
     // Main loop flag
     bool quit = false;
 
     // Event handler
 	SDL_Event e;
 
-    Player player;
-    TextureManager& tm = TextureManager::getInstance();
+    //Tile* tileSet[TOTAL_TILES];
 
-    //player.setRenderer(renderer_);
-    //player.getTexture()->setRenderer(renderer_);
-    //tileTexture.setRenderer(renderer_);
+    Player player;
+
+    TextureManager& tm = TextureManager::getInstance();
 
     if (!loadMedia(tm)) {
         printf( "Failed to load media!\n" );
@@ -98,18 +95,18 @@ void Game::run() {
     } */
 
     // current animation frame
-    int frame = 0;
+    //int frame = 0;
     
     // camera
-    // SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+    SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
-    Timer fpsTimer;
+/*     Timer fpsTimer;
     Timer capTimer;
     int countedFrames = 0;
-    fpsTimer.start();
+    fpsTimer.start(); */
     
     while (!quit) {
-        capTimer.start();
+        //capTimer.start();
 
         // handle events
         while (SDL_PollEvent(&e) != 0) {
@@ -118,16 +115,16 @@ void Game::run() {
                 quit = true;
             }
 
-            float avgFps = countedFrames / (fpsTimer.getTicks() / 1000.f);
-            if (avgFps > 2000000) {
+            //float avgFps = countedFrames / (fpsTimer.getTicks() / 1000.f);
+            /* if (avgFps > 2000000) {
                 avgFps = 0;
-            }
+            } */
 
             // Handle player input
             player.handleEvent(e);           
         }
 
-        //player.move(tileSet);
+        player.move(tileSet);
         //player.setCamera(camera);
 
         // clear screen
@@ -135,9 +132,9 @@ void Game::run() {
 		SDL_RenderClear(renderer_);
 
         // render level
-/* 		for (int i = 0; i < TOTAL_TILES; ++i) {
-			tileSet[i]->render(camera);
-		} */
+ 		for (int i = 0; i < TOTAL_TILES; ++i) {
+			tileSet[i]->render(renderer_, camera);
+		} 
 
         // render player
         //player.render(camera);
@@ -149,23 +146,23 @@ void Game::run() {
             currentClip); */
         Uint32 currentTime = SDL_GetTicks();
         player.update(currentTime);
-        player.render(renderer_, tm.getTexture("PLAYER_IDLE"));
+        player.render(renderer_);
 
-        ++frame;
+       // ++frame;
 
         // cycle animation
-        if (frame >= 16 * 4) {
+ /*        if (frame >= 16 * 4) {
             frame = 0;
-        }
+        } */
         // update screen
         SDL_RenderPresent(renderer_);
 
-        ++countedFrames;
+        //++countedFrames;
         // if frame finished eaerly
-        int frameTicks = capTimer.getTicks();
+        /* int frameTicks = capTimer.getTicks();
         if (frameTicks < SCREEN_TICKS_PER_FRAME) {
             SDL_Delay(SCREEN_TICKS_PER_FRAME - frameTicks);
-        }
+        } */
     }
 }
 
@@ -182,20 +179,21 @@ bool Game::loadMedia(TextureManager& tm) {
         printf("successfully loaded player texture\n");
     }
 
-/*     // load tile texture
-    if (!tileTexture.loadFromFile("assets/tiles.png")) {
+    // load tile texture
+    if (!tm.loadTexture("TILES", "assets/tiles.png")) {
         printf("Failed to load file set texture!");
         success = false;
     } else {
         printf("successfully loaded file set texture\n");
     }
+
     // load tile map
-    if (!setTiles(tiles)) {
+    if (!setTiles(tileSet)) {
         printf("Failed to load tile set!\n");
         success = false;
     } else {
         printf("successfullu loaded file set\n");
-    } */
+    }
 
     return success;
 }
@@ -255,7 +253,7 @@ bool checkCollision(SDL_Rect a, SDL_Rect b) {
     return true;
 }
 
-/* bool Game::setTiles(Tile* tiles[]) {
+bool Game::setTiles(Tile* tiles[]) {
     bool tilesLoaded = true;
 
     int x = 0, y = 0;
@@ -280,7 +278,7 @@ bool checkCollision(SDL_Rect a, SDL_Rect b) {
 
             // if the number is a valid tile number
             if ((tileType >= 0) && (tileType < TOTAL_TILE_SPRITES)) {
-                tiles[i] = new Tile(x, y, tileType, &tileTexture, gTileClips);
+                tiles[i] = new Tile(x, y, tileType, gTileClips);
             } else {
                 printf("Error loading map: Invalid tile type at %d!\n", i);
                 tilesLoaded = false;
@@ -364,7 +362,7 @@ bool checkCollision(SDL_Rect a, SDL_Rect b) {
         //printf("Success\n");
         return tilesLoaded;
     }
-} */
+}
 
 /* bool touchesWall(SDL_Rect box, Tile* tiles[]) {
     for (int i = 0; i < TOTAL_TILES; ++i) {
@@ -380,8 +378,8 @@ bool checkCollision(SDL_Rect a, SDL_Rect b) {
     }
 
     return false;
-} */
-
+}
+*/
 /* SDL_Renderer* Game::getRenderer() const {
     return renderer_;
 } */
