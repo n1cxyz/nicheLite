@@ -123,6 +123,12 @@ bool Game::loadMedia(TextureManager& tm) {
     tm.loadTexture({State::Run, Direction::Right}, "assets/TDTA/Sheets/Sword/Sword_2_RR.png");
     tm.loadTexture({State::Run, Direction::Up}, "assets/TDTA/Sheets/Sword/Sword_2_RU.png");
 
+    tm.loadTexture({State::Attack, Direction::Down}, "assets/TDTA/Sheets/Sword/Sword_6_A1D.png");
+    tm.loadTexture({State::Attack, Direction::Left}, "assets/TDTA/Sheets/Sword/Sword_6_A1L.png");
+    tm.loadTexture({State::Attack, Direction::Right}, "assets/TDTA/Sheets/Sword/Sword_6_A1R.png");
+    tm.loadTexture({State::Attack, Direction::Up}, "assets/TDTA/Sheets/Sword/Sword_6_A1U.png");
+
+
     // load tile texture
     if (!tm.loadTexture("TILES", "assets/peaceful_pixels/tiles_free.png")) {
         printf("Failed to load file set texture!");

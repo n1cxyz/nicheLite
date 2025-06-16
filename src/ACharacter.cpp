@@ -6,25 +6,39 @@
 ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(4) {
 
     std::vector<SDL_Rect>frames = {
-        {48, 48, 32, 32},
-        {176, 48, 32, 32},
-        {304, 48, 32, 32},
-        {432, 48, 32, 32},
-        {560, 48, 32, 32}
+        {0, 0, 128, 128},
+        {128, 0, 128, 128},
+        {256, 0, 128, 128},
+        {384, 0, 128, 128},
+        {512, 0, 128, 128}
     };
 
-    std::vector<State> states = {State::Idle, State::Run};
+    std::vector<SDL_Rect>aFrames = {
+        {0, 0, 128, 128},
+        {128, 0, 128, 128},
+        {256, 0, 128, 128},
+        {384, 0, 128, 128},
+        {512, 0, 128, 128},
+        {640, 0, 128, 128},
+        {768, 0, 128, 128},
+        {896, 0, 128, 128},
+    };
+
+    std::vector<State> states = {State::Idle, State::Run, State::Attack};
     std::vector<Direction> directions = {Direction::Down, Direction::Left, Direction::Right, Direction::Up};
 
     for (const auto& state : states) {
         for (const auto& dir : directions) {
-            if (state == State::Idle) {
+            if (state == State::Attack) {
+                animations[{state, dir}] = Animation{ aFrames, 100 };
+            } else if (state == State::Idle) {
                 animations[{state, dir}] = Animation{ frames, 200 };
             } else {
                 animations[{state, dir}] = Animation{ frames, 100 };
             }
         }
-    }    
+    } 
+
 };
 ACharacter::~ACharacter() {};
 
@@ -87,11 +101,15 @@ void ACharacter::update(Uint32 currentTime) {
         velX_ = maxVel_;
         setDirection(Direction::Right);
     }
-
+    
     if (velX_ != 0 || velY_ != 0) {
         setState(State::Run);
     } else if (currentState != State::Attack) {
         setState(State::Idle);
+    }
+
+    if (keystate[SDL_SCANCODE_Q]) {
+        setState(State::Attack);
     }
 
     auto it = animations.find({currentState, currentDirection});
