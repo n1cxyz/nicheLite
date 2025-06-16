@@ -76,10 +76,10 @@ void Game::run() {
         printf( "Failed to load media!\n" ); return;
     }
     
+    loadLevel("assets/lazy.map");
     
     while (!quit) {
         //capTimer.start();
-        loadLevel("assets/lazy.map");
 
         // handle events
         while (SDL_PollEvent(&e) != 0) {
@@ -91,7 +91,7 @@ void Game::run() {
             // Handle player input
             player.handleEvent(e);           
         } 
-        //player.setCamera(camera);
+        //rplayer.setCamera(camera);
 
         // clear screen
         SDL_RenderClear(renderer_);
@@ -168,49 +168,3 @@ void Game::renderLevel(SDL_Renderer* renderer, SDL_Rect& camera) {
     SDL_Quit();
 } */
 
-/* bool Game::setTiles(Tile* tiles[]) {
-    bool tilesLoaded = true;
-
-    int x = 0, y = 0;
-
-    std::ifstream map("assets/lazy.map");
-    if (map.fail()) {
-        printf("Unable to load map file!\n");
-        tilesLoaded = false;
-        return false;
-    } else {
-        // init tiles
-        for (int i = 0; i < TOTAL_TILES; ++i) {
-            // determine what kind of tile will be made
-            int tileType = -1;
-
-            // read tile from map file
-            map >> tileType;
-            if (map.fail()) {
-                printf("Error loading map: Unexpected end of file!\n");
-                tilesLoaded = false;
-                break;
-            }
-            // if the number is a valid tile number
-            if ((tileType >= 0) && (tileType < TOTAL_TILE_SPRITES)) {
-                tiles[i] = new Tile(x, y, tileType, &clips[tileType]);
-            } else {
-                printf("Error loading map: Invalid tile type at %d!\n", i);
-                tilesLoaded = false;
-                break;
-            }
-
-            // move to next tile spot
-            x += TILE_WIDTH;
-
-            if (x >= LEVEL_WIDTH) {
-                x = 0;
-                y += TILE_HEIGHT;
-            }
-        }
-
-        map.close();
-        //printf("Success\n");
-        return tilesLoaded;
-    }
-} */
