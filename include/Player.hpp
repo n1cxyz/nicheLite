@@ -8,5 +8,5 @@ class Player : public ACharacter {
     public:
         //void render(SDL_Rect& camera);
         void handleEvent(SDL_Event& e);
-        //void setCamera(SDL_Rect& camera);
+        void setCamera(SDL_Rect& camera);
 };

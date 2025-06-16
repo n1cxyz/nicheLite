@@ -24,7 +24,8 @@ void Player::handleEvent(SDL_Event& e) {
     } */
 }
 
-/* void Player::setCamera(SDL_Rect& camera) {
+void Player::setCamera(SDL_Rect& camera) {
+   //printf("Player x: %d, y: %d\n", box_.x, box_.y);
     // Center the camera over player
     camera.x = (box_.x + width_ / 2) - SCREEN_WIDTH / 2;
     camera.y = (box_.y + height_ / 2) - SCREEN_HEIGHT / 2;
@@ -36,13 +37,15 @@ void Player::handleEvent(SDL_Event& e) {
     if (camera.y < 0) {
         camera.y = 0;
     }
-    if (camera.x > LEVEL_WIDTH - camera.w) {
-        camera.x = LEVEL_WIDTH - camera.w;
+    if (camera.x > (LEVEL_WIDTH * 32) - camera.w) {
+        camera.x = (LEVEL_WIDTH * 32) - camera.w;
     }
-    if (camera.y > LEVEL_HEIGHT - camera.h) {
-        camera.y = LEVEL_HEIGHT - camera.h;
+    if (camera.y > (LEVEL_HEIGHT * 32) - camera.h) {
+        camera.y = (LEVEL_HEIGHT * 32) - camera.h;
     }
-} */
+    //printf("x: %d\n", camera.x);
+    //printf("y: %d\n", camera.y);
+}
 
 /* void Player::render(SDL_Rect& camera) {
     texture_->render(box_.x - camera.x, box_.y - camera.y);

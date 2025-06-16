@@ -90,25 +90,17 @@ void Game::run() {
 
             // Handle player input
             player.handleEvent(e);           
-        } 
-        //rplayer.setCamera(camera);
+        }
 
         // clear screen
         SDL_RenderClear(renderer_);
-
-        // render level
-/*  		for (int i = 0; i < TOTAL_TILES; ++i) {
-			tiles[i]->render(renderer_, camera);
-		}  */
-        renderLevel(renderer_, camera);
-
-        // render player
-        //player.render(camera);
 
         Uint32 currentTime = SDL_GetTicks();
 
         player.update(currentTime);
         player.move(map.getTiles());
+        player.setCamera(camera);
+        renderLevel(renderer_, camera);
         player.render(renderer_);
 
         // update screen
