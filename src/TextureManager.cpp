@@ -48,7 +48,7 @@ bool TextureManager::loadTexture(const std::pair<State,Direction>& key, const st
 	playerTextures_[key] = newTexture;
 	SDL_Log("Added texture: state=%d, dir=%d", static_cast<int>(key.first), static_cast<int>(key.second));
 
-	printf("Success loading player Texture %s\n", filePath.c_str());
+	//printf("Success loading player Texture %s\n", filePath.c_str());
 	return true;
 }
 

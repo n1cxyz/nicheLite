@@ -13,6 +13,6 @@ class Tile {
         Tile(int x, int y, int type, SDL_Rect* clip);
         void render(SDL_Renderer* renderer, SDL_Rect& camera);
 
-        int getType();
-        SDL_Rect getBox();
+        const int& getType() const;
+        const SDL_Rect& getBox() const;
 };

@@ -1,6 +1,7 @@
 #include "ACharacter.hpp"
 #include "Constants.hpp"
 #include "TextureManager.hpp"
+#include "Utils.hpp"
 
 ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(4) {
 
@@ -46,7 +47,7 @@ void ACharacter::render(SDL_Renderer* renderer) {
     }
 
     const SDL_Rect& srcRect = anim.frames[currentFrameIndex];
-    SDL_Rect destRect = {box_.x, box_.y, srcRect.w * 3, srcRect.h * 3};
+    SDL_Rect destRect = {box_.x, box_.y, srcRect.w * SCALE, srcRect.h * SCALE};
 
     // Get texture
     SDL_Texture* tex = TextureManager::getInstance().getTexture(key);
@@ -56,8 +57,8 @@ void ACharacter::render(SDL_Renderer* renderer) {
     }
 
     // draw player hitbox
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); 
-    SDL_RenderDrawRect(renderer, &box_);
+/*     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); 
+    SDL_RenderDrawRect(renderer, &box_); */
 
     // Render
     SDL_RenderCopy(renderer, tex, &srcRect, &destRect);
@@ -125,18 +126,18 @@ void ACharacter::setDirection(Direction newDirection) {
 }
 
 
-void ACharacter::move(Tile *tiles[]) {
+void ACharacter::move(std::vector<Tile*> tiles) {
     // Move left or right
     box_.x += velX_;
 
     // If moved too far or touched Wall
-    if ((box_.x < 0) || (box_.x + width_ > SCREEN_WIDTH) || touchesWall(box_, tiles)) {
+    if ((box_.x < 0) || (box_.x + width_ > SCREEN_WIDTH) || Utils::touchesWall(box_, tiles)) {
         box_.x -= velX_;
     }
     // Move up or down
     box_.y += velY_;
 
-    if ((box_.y < 0) || (box_.y + height_ > SCREEN_HEIGHT) || touchesWall(box_, tiles)) {
+    if ((box_.y < 0) || (box_.y + height_ > SCREEN_HEIGHT) || Utils::touchesWall(box_, tiles)) {
         box_.y -= velY_;
     }
 }

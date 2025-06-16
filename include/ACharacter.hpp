@@ -35,7 +35,7 @@ class ACharacter : public AEntity {
         virtual ~ACharacter();
 
         // moves and cheks for collision
-        void move(Tile* tiles[]);
+        void move(std::vector<Tile*> tiles);
 
         void update(Uint32 currentTime);
         void render(SDL_Renderer* renderer);
