@@ -31,24 +31,24 @@ SDL_Texture* TextureManager::initTexture(const std::string& filePath) {
 	return newTexture;
 }
 
-bool TextureManager::loadTexture(const std::pair<State,Direction>& key, const std::string& filePath) {
+bool TextureManager::loadTexture(const std::tuple<State,Direction,Type>& key, const std::string& filePath) {
 	SDL_Texture* newTexture = initTexture(filePath);
 	if (!newTexture) {
-		printf("Failed to load player Texture %s\n", filePath.c_str());
+		printf("Failed to load Texture %s\n", filePath.c_str());
 		return false;
 	} 
 
-	auto it = playerTextures_.find(key);
-	if (it != playerTextures_.end()) {
+	auto it = entityTextures_.find(key);
+	if (it != entityTextures_.end()) {
 		SDL_DestroyTexture(it->second);
-		playerTextures_.erase(it);
+		entityTextures_.erase(it);
 	}
 
 	// add texture to map
-	playerTextures_[key] = newTexture;
+	entityTextures_[key] = newTexture;
+
 	//SDL_Log("Added texture: state=%d, dir=%d", static_cast<int>(key.first), static_cast<int>(key.second));
 
-	//printf("Success loading player Texture %s\n", filePath.c_str());
 	return true;
 }
 
@@ -71,9 +71,9 @@ bool TextureManager::loadTexture(const std::string& key, const std::string& file
 	return true;
 }
 
-SDL_Texture* TextureManager::getTexture(const std::pair<State,Direction>& key) {
-	auto it = playerTextures_.find(key);
-    if (it != playerTextures_.end()) {
+SDL_Texture* TextureManager::getTexture(const std::tuple<State,Direction,Type>& key) {
+	auto it = entityTextures_.find(key);
+    if (it != entityTextures_.end()) {
         return it->second;
     }
 	printf("missing texture!\n");

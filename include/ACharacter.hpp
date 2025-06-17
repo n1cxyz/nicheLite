@@ -3,7 +3,7 @@
 #include "AEntity.hpp"
 #include <vector>
 #include <unordered_map>
-#include "EnumPairHash.hpp"
+//#include "EnumPairHash.hpp"
 //#include "Enums.hpp"
 
 class Tile;
@@ -17,10 +17,10 @@ class ACharacter : public AEntity {
     protected:
 
         // map of animations
-        std::unordered_map<std::pair<State, Direction>, Animation, EnumPairHash> animations;
+        std::unordered_map<std::tuple<State,Direction,Type>, Animation, TupleHash> animations;
 
-        State currentState = State::Idle;
-        Direction currentDirection = Direction::Down;
+        State currentState_ = State::Idle;
+        Direction currentDirection_ = Direction::Down;
         size_t currentFrameIndex = 0;
         Uint32 lastFrameTime = 0;
     
@@ -29,10 +29,10 @@ class ACharacter : public AEntity {
         int velY_;
 
         // Maximum axis velocity
-        const int maxVel_;
+        int maxVel_;
 
     public:
-        ACharacter();
+        ACharacter(Type type);
         virtual ~ACharacter();
 
         // moves and cheks for collision
@@ -44,5 +44,5 @@ class ACharacter : public AEntity {
         void setState(State newState);
         void setDirection(Direction newDirection);
 
-        State getState() const { return currentState; }
+        State getState() const { return currentState_; }
 };

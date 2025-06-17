@@ -3,7 +3,7 @@
 #include "TextureManager.hpp"
 #include "Utils.hpp"
 
-ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(4) {
+ACharacter::ACharacter(Type type) : AEntity(type), velX_(0), velY_(0), maxVel_(4) {
 
     std::vector<SDL_Rect>frames = {
         {0, 0, 128, 128},
@@ -30,11 +30,11 @@ ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(4) {
     for (const auto& state : states) {
         for (const auto& dir : directions) {
             if (state == State::Attack) {
-                animations[{state, dir}] = Animation{ aFrames, 100 };
+                animations[{state, dir, type_}] = Animation{ aFrames, 100 };
             } else if (state == State::Idle) {
-                animations[{state, dir}] = Animation{ frames, 200 };
+                animations[{state, dir, type_}] = Animation{ frames, 200 };
             } else {
-                animations[{state, dir}] = Animation{ frames, 100 };
+                animations[{state, dir, type_}] = Animation{ frames, 100 };
             }
         }
     } 
@@ -43,12 +43,12 @@ ACharacter::ACharacter() : velX_(0), velY_(0), maxVel_(4) {
 ACharacter::~ACharacter() {};
 
 void ACharacter::render(SDL_Renderer* renderer) {
-    std::pair<State, Direction> key = {currentState, currentDirection};
+    std::tuple<State,Direction,Type> key = {currentState_, currentDirection_, type_};
 
     // Get animation
     auto animIt = animations.find(key);
     if (animIt == animations.end() || animIt->second.frames.empty()) {
-        SDL_Log("Missing or empty animation for state=%d, dir=%d", (int)currentState, (int)currentDirection);
+        SDL_Log("Missing or empty animation for state=%d, dir=%d, type=%d", (int)currentState_, (int)currentDirection_, (int)type_);
         return;
     }
 
@@ -66,7 +66,7 @@ void ACharacter::render(SDL_Renderer* renderer) {
     // Get texture
     SDL_Texture* tex = TextureManager::getInstance().getTexture(key);
     if (!tex) {
-        SDL_Log("Texture not found for state=%d, dir=%d", (int)currentState, (int)currentDirection);
+        SDL_Log("Texture not found for state=%d, dir=%d", (int)currentState_, (int)currentDirection_);
         return;
     }
 
@@ -105,7 +105,7 @@ void ACharacter::update(Uint32 currentTime) {
     
     if (velX_ != 0 || velY_ != 0) {
         setState(State::Run);
-    } else if (currentState != State::Attack) {
+    } else if (currentState_ != State::Attack) {
         setState(State::Idle);
     }
 
@@ -113,32 +113,32 @@ void ACharacter::update(Uint32 currentTime) {
         setState(State::Attack);
     }
 
-    auto it = animations.find({currentState, currentDirection});
+    auto it = animations.find({currentState_, currentDirection_, type_});
     if (it == animations.end()) {
-        SDL_Log("Missing animation for state=%d, dir=%d", static_cast<int>(currentState), static_cast<int>(currentDirection));
+        SDL_Log("Missing animation for state=%d, dir=%d", static_cast<int>(currentState_), static_cast<int>(currentDirection_));
         return;
     }
     const Animation& anim = it->second;
-
+    
     if (currentTime - lastFrameTime >= anim.frameDuration && !anim.frames.empty()) {
         currentFrameIndex = (currentFrameIndex + 1) % anim.frames.size();
         lastFrameTime = currentTime;
     }
 
-    //SDL_Log("Update: velocity (%d, %d), state = %d, dir = %d", velX_, velY_, static_cast<int>(currentState), static_cast<int>(currentDirection));
+    //SDL_Log("Update: velocity (%d, %d), state = %d, dir = %d", velX_, velY_, static_cast<int>(currentState_), static_cast<int>(currentDirection_));
 }
 
 void ACharacter::setState(State newState) {
-    if (currentState != newState) {
-        currentState = newState;
+    if (currentState_ != newState) {
+        currentState_ = newState;
         currentFrameIndex = 0;
         lastFrameTime = SDL_GetTicks();
     }
 }
 
 void ACharacter::setDirection(Direction newDirection) {
-    if (currentDirection != newDirection) {
-        currentDirection = newDirection;
+    if (currentDirection_ != newDirection) {
+        currentDirection_ = newDirection;
         currentFrameIndex = 0;
         lastFrameTime = SDL_GetTicks();
     }

@@ -1,13 +1,13 @@
 #include "Game.hpp"
 #include "Player.hpp"
-//#include "Timer.hpp"
-//#include "Tile.hpp"
 #include "TextureManager.hpp"
-//#include "SDL.h"
 #include "SDL_image.h"
-//#include "fstream"
 #include "Enemy.hpp"
 #include "Constants.hpp"
+//#include "Timer.hpp"
+//#include "Tile.hpp"
+//#include "fstream"
+//#include "SDL.h"
 
 Game::Game() {}
 Game::~Game() {}
@@ -68,12 +68,12 @@ void Game::run() {
     // camera
     SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
-    Player player;
-    Enemy enemy;
-
     Map map;
 
     TextureManager& tm = TextureManager::getInstance();
+
+    Player player;
+    //Enemy enemy;
 
     if (!loadMedia(tm)) {
         printf( "Failed to load media!\n" ); return;
@@ -106,7 +106,7 @@ void Game::run() {
         renderLevel(renderer_, camera);
         player.render(renderer_);
         //enemy.update(currentTime);
-        enemy.render(renderer_);
+        //enemy.render(renderer_);
 
         // update screen
         SDL_RenderPresent(renderer_);
@@ -118,20 +118,20 @@ bool Game::loadMedia(TextureManager& tm) {
 	bool success = true;
 
 	// Load player texture
-	tm.loadTexture({State::Idle, Direction::Down}, "assets/TDTA/Sheets/Sword/Sword_1_ID.png");
-    tm.loadTexture({State::Idle, Direction::Left}, "assets/TDTA/Sheets/Sword/Sword_1_IL.png");
-    tm.loadTexture({State::Idle, Direction::Right}, "assets/TDTA/Sheets/Sword/Sword_1_IR.png");
-    tm.loadTexture({State::Idle, Direction::Up}, "assets/TDTA/Sheets/Sword/Sword_1_IU.png");
+	tm.loadTexture({State::Idle, Direction::Down, Type::Player}, "assets/TDTA/Sheets/Sword/Sword_1_ID.png");
+    tm.loadTexture({State::Idle, Direction::Left, Type::Player}, "assets/TDTA/Sheets/Sword/Sword_1_IL.png");
+    tm.loadTexture({State::Idle, Direction::Right, Type::Player}, "assets/TDTA/Sheets/Sword/Sword_1_IR.png");
+    tm.loadTexture({State::Idle, Direction::Up, Type::Player}, "assets/TDTA/Sheets/Sword/Sword_1_IU.png");
     
-    tm.loadTexture({State::Run, Direction::Down}, "assets/TDTA/Sheets/Sword/Sword_2_RD.png");
-    tm.loadTexture({State::Run, Direction::Left}, "assets/TDTA/Sheets/Sword/Sword_2_RL.png");
-    tm.loadTexture({State::Run, Direction::Right}, "assets/TDTA/Sheets/Sword/Sword_2_RR.png");
-    tm.loadTexture({State::Run, Direction::Up}, "assets/TDTA/Sheets/Sword/Sword_2_RU.png");
+    tm.loadTexture({State::Run, Direction::Down, Type::Player}, "assets/TDTA/Sheets/Sword/Sword_2_RD.png");
+    tm.loadTexture({State::Run, Direction::Left, Type::Player}, "assets/TDTA/Sheets/Sword/Sword_2_RL.png");
+    tm.loadTexture({State::Run, Direction::Right, Type::Player}, "assets/TDTA/Sheets/Sword/Sword_2_RR.png");
+    tm.loadTexture({State::Run, Direction::Up, Type::Player}, "assets/TDTA/Sheets/Sword/Sword_2_RU.png");
 
-    tm.loadTexture({State::Attack, Direction::Down}, "assets/TDTA/Sheets/Sword/Sword_6_A1D.png");
-    tm.loadTexture({State::Attack, Direction::Left}, "assets/TDTA/Sheets/Sword/Sword_6_A1L.png");
-    tm.loadTexture({State::Attack, Direction::Right}, "assets/TDTA/Sheets/Sword/Sword_6_A1R.png");
-    tm.loadTexture({State::Attack, Direction::Up}, "assets/TDTA/Sheets/Sword/Sword_6_A1U.png");
+    tm.loadTexture({State::Attack, Direction::Down, Type::Player}, "assets/TDTA/Sheets/Sword/Sword_6_A1D.png");
+    tm.loadTexture({State::Attack, Direction::Left, Type::Player}, "assets/TDTA/Sheets/Sword/Sword_6_A1L.png");
+    tm.loadTexture({State::Attack, Direction::Right, Type::Player}, "assets/TDTA/Sheets/Sword/Sword_6_A1R.png");
+    tm.loadTexture({State::Attack, Direction::Up, Type::Player}, "assets/TDTA/Sheets/Sword/Sword_6_A1U.png");
 
 
     // load tile texture
