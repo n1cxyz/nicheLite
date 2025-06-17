@@ -1,6 +1,6 @@
 #include "TextureManager.hpp"
 #include "SDL_image.h"
-#include "EnumPairHash.hpp"
+//#include "EnumPairHash.hpp"
 
 
 SDL_Texture* TextureManager::initTexture(const std::string& filePath) {

@@ -1,11 +1,13 @@
 #include "Game.hpp"
 #include "Player.hpp"
-#include "Timer.hpp"
-#include "Tile.hpp"
-//#include "TextureManager.hpp"
+//#include "Timer.hpp"
+//#include "Tile.hpp"
+#include "TextureManager.hpp"
 //#include "SDL.h"
 #include "SDL_image.h"
-#include "fstream"
+//#include "fstream"
+#include "Enemy.hpp"
+#include "Constants.hpp"
 
 Game::Game() {}
 Game::~Game() {}
@@ -67,6 +69,7 @@ void Game::run() {
     SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
     Player player;
+    Enemy enemy;
 
     Map map;
 
@@ -95,13 +98,15 @@ void Game::run() {
         // clear screen
         SDL_RenderClear(renderer_);
 
-        Uint32 currentTime = SDL_GetTicks();
+        Uint32 currentTime = SDL_GetTicks();        
 
         player.update(currentTime);
         player.move(map.getTiles());
         player.setCamera(camera);
         renderLevel(renderer_, camera);
         player.render(renderer_);
+        //enemy.update(currentTime);
+        enemy.render(renderer_);
 
         // update screen
         SDL_RenderPresent(renderer_);

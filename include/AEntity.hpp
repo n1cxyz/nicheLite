@@ -2,7 +2,7 @@
 
 #include "SDL.h"
 
-class TextureManager;
+//class TextureManager;
 
 class AEntity {
     protected:

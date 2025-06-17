@@ -5,6 +5,7 @@
 #include "unordered_map"
 #include "ACharacter.hpp"
 #include "EnumPairHash.hpp"
+#include "Enums.hpp"
 
 
 class TextureManager {

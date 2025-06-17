@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SDL.h"
-#include "Constants.hpp"
+//#include "Constants.hpp"
 #include "TextureManager.hpp"
 #include "Map.hpp"
 

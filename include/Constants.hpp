@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Tile.hpp"
-#include "SDL.h"
+//#include "Tile.hpp"
+//#include "SDL.h"
 
 const int FPS = 60;
 
@@ -16,8 +16,8 @@ const int LEVEL_WIDTH = 64;
 const int LEVEL_HEIGHT = 40;
 
 //Tile constants
-const int TILE_WIDTH = 32;
-const int TILE_HEIGHT = 32;
+const int TILE_WIDTH = 64;
+const int TILE_HEIGHT = 64;
 
 const int TOTAL_TILES = LEVEL_WIDTH * LEVEL_HEIGHT;
 const int TOTAL_TILE_SPRITES = 2;

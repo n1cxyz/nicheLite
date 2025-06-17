@@ -1,5 +1,5 @@
 #include "Utils.hpp"
-#include "Constants.hpp"
+//#include "Constants.hpp"
 
 bool Utils::touchesWall(SDL_Rect& box, std::vector<Tile*>& tiles) {
     for (Tile* tile : tiles) {

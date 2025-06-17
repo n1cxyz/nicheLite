@@ -70,10 +70,11 @@ void ACharacter::render(SDL_Renderer* renderer) {
         return;
     }
 
-    // draw player hitbox
-/*     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); 
-    SDL_RenderDrawRect(renderer, &box_); */
+    // draw hitbox
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); 
+    SDL_RenderDrawRect(renderer, &box_);
 
+    //printf("hello\n");
     // Render
     SDL_RenderCopy(renderer, tex, &srcRect, &destRect);
 }
