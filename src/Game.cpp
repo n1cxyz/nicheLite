@@ -78,7 +78,6 @@ void Game::run() {
     if (!loadMedia(tm)) {
         printf( "Failed to load media!\n" ); return;
     }
-    
     loadLevel("assets/lazy.map");
     
     while (!quit) {
