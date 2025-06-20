@@ -8,16 +8,16 @@
 
 class Tile;
 
-struct Animation {
+/* struct Animation {
     std::vector<SDL_Rect> frames;
     Uint32 frameDuration;
-};
+}; */
 
 class ACharacter : public AEntity {
     protected:
 
         // map of animations
-        std::unordered_map<std::tuple<State,Direction,Type>, Animation, TupleHash> animations;
+        //std::unordered_map<std::tuple<State,Direction,Type>, Animation, TupleHash> animations;
 
         State currentState_ = State::Idle;
         Direction currentDirection_ = Direction::Down;
