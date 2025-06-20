@@ -7,7 +7,6 @@
 #include "Enums.hpp"
 #include <tuple>
 
-
 class TextureManager {
     private:
         TextureManager() {}

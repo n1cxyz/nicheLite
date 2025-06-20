@@ -73,7 +73,7 @@ void Game::run() {
     TextureManager& tm = TextureManager::getInstance();
 
     Player player;
-    //Enemy enemy;
+    Enemy enemy;
 
     if (!loadMedia(tm)) {
         printf( "Failed to load media!\n" ); return;
@@ -105,7 +105,7 @@ void Game::run() {
         renderLevel(renderer_, camera);
         player.render(renderer_);
         //enemy.update(currentTime);
-        //enemy.render(renderer_);
+        enemy.render(renderer_);
 
         // update screen
         SDL_RenderPresent(renderer_);

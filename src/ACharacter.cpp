@@ -30,7 +30,7 @@ ACharacter::ACharacter(Type type) : AEntity(type), velX_(0), velY_(0), maxVel_(4
     for (const auto& state : states) {
         for (const auto& dir : directions) {
             if (state == State::Attack) {
-                animations[{state, dir, type_}] = Animation{ aFrames, 100 };
+                animations[{state, dir, type_}] = Animation{ aFrames, 10 };
             } else if (state == State::Idle) {
                 animations[{state, dir, type_}] = Animation{ frames, 200 };
             } else {

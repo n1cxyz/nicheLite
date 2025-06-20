@@ -8,7 +8,6 @@ struct Animation {
     Uint32 frameDuration;
 };
 
-
 class Animator {
 private:
     Animation* current;
