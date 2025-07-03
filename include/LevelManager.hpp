@@ -27,4 +27,6 @@ public:
     void loadEntities();
     void loadAnimations();
     // void renderLevel(SDL_Renderer* renderer, SDL_Rect& camera);
+
+    void destroyLevel();
 };
