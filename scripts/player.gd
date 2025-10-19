@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed := 400.0
+@export var speed := 100.0
 
 var last_direction := Vector2.DOWN  # Default facing direction
 

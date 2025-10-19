@@ -15,6 +15,13 @@ run/main_scene="uid://dvkeqawxf8sn8"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/size/mode=3
+window/stretch/mode="viewport"
+
 [input]
 
 ui_left={
